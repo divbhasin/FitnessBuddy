@@ -25,7 +25,7 @@ CREATE TABLE food_group (
     PRIMARY KEY (id));
 ```
 
-**Import from food_group.csv into table:**
+**Import from food_group.csv into table (in Psql shell):**
 ```postgresql
 \COPY food_group FROM 'datasets/food_group.csv' DELIMITER ',' CSV HEADER;
 ```
@@ -46,7 +46,7 @@ CREATE TABLE food (
     FOREIGN KEY (food_group_id) REFERENCES food_group(id));
 ```
 
-**Import from food.csv into table:**
+**Import from food.csv into table (in Psql shell):**
 ```postgresql
 \COPY food FROM 'datasets/food.csv' DELIMITER ',' CSV HEADER;
 ```
