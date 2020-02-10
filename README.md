@@ -1,8 +1,22 @@
 # Fitness App
-## Importing Food Datasets into PostgreSQL
+## Getting started
+### Requirements
+* Ruby
+* Node.js
+* Yarn
+
+### Building and running app
+1. Git clone
+2. Navigate to `rails-app/fitness` directory
+3. `bundle install`
+4. `yarn install`
+5. `rails s`
+6. Go to [http://127.0.0.1:3000](http://127.0.0.1:3000) in your web browser
+
+## Importing food datasets into PostgreSQL
 CSV files, sample SQL statements, and output files for Food and Food Group tables are in the `datasets` folder.
 
-### Food Group Table
+### Food group table
 **Create table:**
 ```sql
 CREATE TABLE food_group (
@@ -16,7 +30,7 @@ CREATE TABLE food_group (
 \COPY food_group FROM 'datasets/food_group.csv' DELIMITER ',' CSV HEADER;
 ```
 
-### Food Table
+### Food table
 **Create table:**
 ```sql
 CREATE TABLE food (
