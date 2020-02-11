@@ -13,6 +13,9 @@
 5. `rails s`
 6. Go to [http://127.0.0.1:3000](http://127.0.0.1:3000) in your web browser
 
+### Database schema
+Our schema can be found as a collection of `migration`s located in `/fitness/db/migrate`
+
 ## Importing food datasets into PostgreSQL
 CSV files, sample SQL statements, and output files for Food and Food Group tables are in the `datasets` folder.
 
