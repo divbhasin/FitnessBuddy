@@ -1,0 +1,3 @@
+class ActiveSupport::TestCase
+end
+
