@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_11_185349) do
+ActiveRecord::Schema.define(version: 2020_02_11_214045) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gin"
@@ -155,10 +155,10 @@ ActiveRecord::Schema.define(version: 2020_02_11_185349) do
     t.index ["email"], name: "user_email_key", unique: true
   end
 
-  create_table "users", id: false, force: :cascade do |t|
-    t.serial "uid", null: false
+  create_table "users", id: :serial, force: :cascade do |t|
     t.string "email", limit: 100
     t.string "password", limit: 100
+    t.index ["email"], name: "users_email_key", unique: true
   end
 
   add_foreign_key "auth_group_permissions", "auth_group", column: "group_id", name: "auth_group_permissions_group_id_b120cbf9_fk_auth_group_id"
