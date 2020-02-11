@@ -67,10 +67,17 @@ class CreateUserForm extends React.Component {
             email: this.state.email,
             password: this.state.password
           }
-          axios.post('/api/v1/users', { email: user.email, password: user.password } )
-            .then(res => { window.location.href = '/' })
-            .catch(err => { console.log('error') })
-        } else{
+          axios.post('/api/v1/users', { user: user } )
+            .then(({ data }) => { 
+              if ('errors' in data) {
+                this.setState( { errors: data.errors } )
+              } else {
+                window.location.href = '/'
+              }
+            })
+            .catch(errs => { console.log(errs) })
+        } else {
+          // do nothing. error should already be displayed.
         }
     }
 
