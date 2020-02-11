@@ -3,10 +3,9 @@ class CreateUsers < ActiveRecord::Migration[6.0]
     execute <<-SQL
       CREATE TABLE "users" (
         id SERIAL PRIMARY KEY,
-        email VARCHAR(100) UNIQUE,
-        password VARCHAR(100)
+        email VARCHAR(100) UNIQUE NOT NULL,
+        password VARCHAR(100) NOT NULL
       );
     SQL
   end
 end
-
