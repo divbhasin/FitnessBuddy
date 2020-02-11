@@ -15,14 +15,6 @@ export default () => (
           className="btn btn-lg custom-button"
           role="button"
         >
-          Login
-        </Link>
-        {" "}
-        <Link
-          to="/create_user"
-          className="btn btn-lg custom-button"
-          role="button"
-        >
           Register
         </Link>
       </div>
