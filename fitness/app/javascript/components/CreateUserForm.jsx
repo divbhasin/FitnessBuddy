@@ -1,4 +1,6 @@
 import React from "react";
+import axios from 'axios';
+
 const validEmailRegex = 
   RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
 
@@ -16,10 +18,10 @@ class CreateUserForm extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            firstName: null,
-            lastName: null,
-            email: null,
-            password: null,
+            first_name: '',
+            last_name: '',
+            email: '',
+            password: '',
             errors: {}
         };
 
@@ -28,37 +30,47 @@ class CreateUserForm extends React.Component {
     }
 
     handleChange(event) {
-        event.preventDefault();
-        const { name, value } = event.target;
-        let errors = this.state.errors;
+      event.preventDefault();
+      const { name, value } = event.target;
+      this.setState( { [name] : value} );
+      let errors = this.state.errors;
 
-        switch (name) {
-            case 'email': 
-            errors.email = 
-                validEmailRegex.test(value)
-                ? ''
-                : 'Email is not valid!';
-            break;
-            case 'password': 
-            errors.password = 
-                value.length < 8
-                ? 'Password must be 8 characters long!'
-                : '';
-            break;
-            default:
-            break;
-        }
+      switch (name) {
+        case 'email': 
+          if (!validEmailRegex.test(value)) {
+            errors.email = 'Email is not valid!'; 
+          } else {
+            delete errors.email;
+          }
+          break;
+        case 'password': 
+          if (value.length < 8) {
+            errors.password = 'Password must be at least 8 characters long!'; 
+          } else {
+            delete errors.password;
+          }
+          break;
+        default:
+          break;
+      }
     }
 
     handleSubmit(event) {
         event.preventDefault();
         if(validateForm(this.state.errors)) {
-          console.info('Valid Form')
           this.setState({
               errors: {}
           })
-        }else{
-            this.setState(this.state.errors)
+
+          const user = { first_name: this.state.first_name,
+            last_name: this.state.last_name,
+            email: this.state.email,
+            password: this.state.password
+          }
+          axios.post('/api/v1/users', { email: user.email, password: user.password } )
+            .then(res => { window.location.href = '/' })
+            .catch(err => { console.log('error') })
+        } else{
         }
     }
 
@@ -71,23 +83,13 @@ class CreateUserForm extends React.Component {
         ))}
           <h1>Sign Up</h1>
           <label>
-            First Name:
-            <input type="text" name="first_name" />
-          </label>
-          <br />
-          <label>
-            Last Name:
-            <input type="text" name="last_name" />
-          </label>
-          <br />
-          <label>
             Email:
-            <input type="text" name="email" onChange={this.handleChange}/>
+            <input type="text" name="email" value={this.state.email} onChange={this.handleChange}/>
           </label>
           <br />
           <label>
             Password:
-            <input type="password" name="password" onChange={this.handleChange}/>
+            <input type="password" name="password" value={this.state.password} onChange={this.handleChange}/>
           </label>
           <br />
           <input type="submit" value="Submit" />
