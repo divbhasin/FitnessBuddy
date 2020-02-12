@@ -1,6 +1,11 @@
 require 'test_helper'
  
 class UserTest < ActiveSupport::TestCase
+  def setup
+    # ensure no test users are in the database before beginning
+    User.where("email LIKE '%test.com'").destroy_all
+  end
+
   test 'user can be created successfully given correct params' do
     me = User.create(email: 'test1@test.com', password: 'this should be long enough')
     assert me.valid?
