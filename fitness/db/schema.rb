@@ -139,15 +139,6 @@ ActiveRecord::Schema.define(version: 2020_02_11_231412) do
     t.integer "age", null: false
   end
 
-  create_table "recipes", force: :cascade do |t|
-    t.string "name"
-    t.text "ingredients"
-    t.text "instruction"
-    t.string "image"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "user", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255, null: false
     t.string "email", limit: 255, null: false
