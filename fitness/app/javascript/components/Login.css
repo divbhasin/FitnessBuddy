@@ -1,0 +1,14 @@
+@media all and (min-width: 480px) {
+  .login {
+    padding: 60px 0;
+  }
+
+  .login h1 {
+    text-align: center;
+  }
+
+  .login form {
+    margin: 0 auto;
+    max-width: 320px;
+  }
+}
