@@ -1,23 +1,18 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react';
+import Dashboard from './Dashboard'
+import Landing from './Landing'
 
-export default () => (
-  <div className="vw-100 vh-100 primary-color d-flex align-items-center justify-content-center">
-    <div className="jumbotron jumbotron-fluid bg-transparent">
-      <div className="container secondary-color">
-        <h1 className="display-4">MyFitnessApp</h1>
-        <p className="lead">
-          Free online calorie counter and diet plan
-        </p>
-        <hr className="my-4" />
-        <Link
-          to="/create_user"
-          className="btn btn-lg custom-button"
-          role="button"
-        >
-          Register
-        </Link>
-      </div>
-    </div>
-  </div>
-);
+class Home extends Component {
+  render() {
+    const { checkedLogin, isLoggedIn, user } = this.props;
+    if (!checkedLogin) {
+      return null;
+    } else if (isLoggedIn) {
+      return (<Dashboard checkedLogin={checkedLogin} isLoggedIn={isLoggedIn} user={user}/>);
+    } else {
+      return (<Landing checkedLogin={checkedLogin} isLoggedIn={isLoggedIn}/>);
+    }
+  }
+}
+
+export default Home;
