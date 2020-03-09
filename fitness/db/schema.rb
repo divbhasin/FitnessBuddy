@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_11_231412) do
+ActiveRecord::Schema.define(version: 2020_03_09_210032) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gin"
@@ -35,6 +35,10 @@ ActiveRecord::Schema.define(version: 2020_02_11_231412) do
   enable_extension "unaccent"
   enable_extension "uuid-ossp"
   enable_extension "xml2"
+
+  create_table "activity_levels", id: :serial, force: :cascade do |t|
+    t.string "description", limit: 2048
+  end
 
   create_table "auth_group", id: :serial, force: :cascade do |t|
     t.string "name", limit: 150, null: false
@@ -134,6 +138,10 @@ ActiveRecord::Schema.define(version: 2020_02_11_231412) do
     t.string "name", null: false
   end
 
+  create_table "goals", id: :serial, force: :cascade do |t|
+    t.string "description", limit: 2048
+  end
+
   create_table "helloworld_user", id: :serial, force: :cascade do |t|
     t.string "name", limit: 200, null: false
     t.integer "age", null: false
@@ -149,6 +157,14 @@ ActiveRecord::Schema.define(version: 2020_02_11_231412) do
   create_table "users", id: :serial, force: :cascade do |t|
     t.string "email", limit: 100, null: false
     t.string "password", limit: 100, null: false
+    t.string "first_name", limit: 100, null: false
+    t.string "last_name", limit: 100, null: false
+    t.float "weight", null: false
+    t.float "height", null: false
+    t.integer "age", null: false
+    t.string "gender", limit: 100, null: false
+    t.integer "goal_id", null: false
+    t.integer "activity_level_id", null: false
     t.index ["email"], name: "users_email_key", unique: true
   end
 
@@ -162,4 +178,6 @@ ActiveRecord::Schema.define(version: 2020_02_11_231412) do
   add_foreign_key "django_admin_log", "auth_user", column: "user_id", name: "django_admin_log_user_id_c564eba6_fk_auth_user_id"
   add_foreign_key "django_admin_log", "django_content_type", column: "content_type_id", name: "django_admin_log_content_type_id_c4bce8eb_fk_django_co"
   add_foreign_key "food", "food_group", name: "food_food_group_id_fkey"
+  add_foreign_key "users", "activity_levels", name: "users_activity_level_id_fkey"
+  add_foreign_key "users", "goals", name: "users_goal_id_fkey"
 end

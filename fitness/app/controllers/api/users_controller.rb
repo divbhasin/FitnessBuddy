@@ -39,6 +39,14 @@ class Api::UsersController < ApplicationController
 
   private
   def user_params 
-    params.require(:user).permit(:email, :password)
+    h = params.require(:user).permit(:email, :password, 
+                                     :first_name, :last_name, :age, :weight,
+                                     :height, :gender, :activity_level, :fitness_goal)
+    g = Goal.find_by(description: h[:fitness_goal])
+    a = ActivityLevel.find_by(description: h[:activity_level])
+    h.delete(:activity_level)
+    h.delete(:fitness_goal)
+    h.merge!({activity_level_id: a.id, goal_id: g.id})
+    h.to_h
   end
 end
