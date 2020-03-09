@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_09_220544) do
+ActiveRecord::Schema.define(version: 2020_03_09_222731) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gin"
@@ -165,6 +165,7 @@ ActiveRecord::Schema.define(version: 2020_03_09_220544) do
     t.string "gender", limit: 100, null: false
     t.integer "goal_id", null: false
     t.integer "activity_level_id", null: false
+    t.index ["email"], name: "email_index"
     t.index ["email"], name: "users_email_key", unique: true
   end
 
