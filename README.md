@@ -48,35 +48,18 @@ CSV files, sample SQL statements, and output files for Food and Food Group table
 
 ### Food group table
 **Create table:**
-```sql
-CREATE TABLE food_group (
-    id integer NOT NULL,
-    name varchar NOT NULL,
-    PRIMARY KEY (id));
-```
+[Food Group Table DDL](fitness/db/migrate/20200309220007_create_food_groups.rb)
 
 **Import from food_group.csv into table (in Psql shell):**
 ```postgresql
-\COPY food_group FROM 'datasets/food_group.csv' DELIMITER ',' CSV HEADER;
+\COPY food_groups FROM 'datasets/food_group.csv' DELIMITER ',' CSV HEADER;
 ```
 
 ### Food table
 **Create table:**
-```sql
-CREATE TABLE food (
-    id integer NOT NULL,
-    food_group_id integer NOT NULL,
-    name varchar NOT NULL,
-    calories DECIMAL(8, 2) NOT NULL CHECK(calories >= 0),
-    carbs DECIMAL(8, 2) NOT NULL CHECK(carbs BETWEEN 0 AND 100),
-    protein DECIMAL(8, 2) NOT NULL CHECK(protein BETWEEN 0 AND 100),
-    fat DECIMAL(8, 2) NOT NULL CHECK(fat BETWEEN 0 AND 100),
-    fibre DECIMAL(8, 2) NOT NULL CHECK(fibre BETWEEN 0 AND 100),
-    PRIMARY KEY (id),
-    FOREIGN KEY (food_group_id) REFERENCES food_group(id));
-```
+[Food Table DDL](fitness/db/migrate/20200309220544_create_foods.rb)
 
 **Import from food.csv into table (in Psql shell):**
 ```postgresql
-\COPY food FROM 'datasets/food.csv' DELIMITER ',' CSV HEADER;
+\COPY foods FROM 'datasets/food.csv' DELIMITER ',' CSV HEADER;
 ```
