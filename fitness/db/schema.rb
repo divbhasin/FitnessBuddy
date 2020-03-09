@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_09_210032) do
+ActiveRecord::Schema.define(version: 2020_03_09_220544) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gin"
@@ -124,7 +124,11 @@ ActiveRecord::Schema.define(version: 2020_03_09_210032) do
     t.index ["session_key"], name: "django_session_session_key_c0390e0f_like", opclass: :varchar_pattern_ops
   end
 
-  create_table "food", id: :integer, default: nil, force: :cascade do |t|
+  create_table "food_groups", id: :serial, force: :cascade do |t|
+    t.string "name", null: false
+  end
+
+  create_table "foods", id: :serial, force: :cascade do |t|
     t.integer "food_group_id", null: false
     t.string "name", null: false
     t.decimal "calories", precision: 8, scale: 2, null: false
@@ -132,10 +136,6 @@ ActiveRecord::Schema.define(version: 2020_03_09_210032) do
     t.decimal "protein", precision: 8, scale: 2, null: false
     t.decimal "fat", precision: 8, scale: 2, null: false
     t.decimal "fibre", precision: 8, scale: 2, null: false
-  end
-
-  create_table "food_group", id: :integer, default: nil, force: :cascade do |t|
-    t.string "name", null: false
   end
 
   create_table "goals", id: :serial, force: :cascade do |t|
@@ -177,7 +177,7 @@ ActiveRecord::Schema.define(version: 2020_03_09_210032) do
   add_foreign_key "auth_user_user_permissions", "auth_user", column: "user_id", name: "auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id"
   add_foreign_key "django_admin_log", "auth_user", column: "user_id", name: "django_admin_log_user_id_c564eba6_fk_auth_user_id"
   add_foreign_key "django_admin_log", "django_content_type", column: "content_type_id", name: "django_admin_log_content_type_id_c4bce8eb_fk_django_co"
-  add_foreign_key "food", "food_group", name: "food_food_group_id_fkey"
+  add_foreign_key "foods", "food_groups", name: "foods_food_group_id_fkey"
   add_foreign_key "users", "activity_levels", name: "users_activity_level_id_fkey"
   add_foreign_key "users", "goals", name: "users_goal_id_fkey"
 end
