@@ -21,6 +21,28 @@
 ### Database schema
 Our schema can be found as a collection of `migration`s located in `/fitness/db/migrate`
 
+## Implemented Features
+- User sign up
+    - [users_controller.rb](fitness/app/controllers/api/users_controller.rb)
+    - [application_controller.rb](fitness/app/controllers/application_controller.rb)
+    - [Signup.jsx](fitness/app/javascript/components/Signup.jsx)
+    - [Signup.css](fitness/app/javascript/components/Signup.css)
+    - [Credentials.jsx](fitness/app/javascript/components/signup/Credentials.jsx)
+    - [PersonalDetails.jsx](fitness/app/javascript/components/signup/PersonalDetails.jsx)
+    - [FitnessGoals.jsx](fitness/app/javascript/components/signup/FitnessGoals.jsx)
+- User login
+    - [users_controller.rb](fitness/app/controllers/api/users_controller.rb)
+    - [sessions_controller.rb](fitness/app/controllers/api/sessions_controller.rb)
+    - [application_controller.rb](fitness/app/controllers/application_controller.rb)
+    - [Login.jsx](fitness/app/javascript/components/Login.jsx)
+    - [Login.css](fitness/app/javascript/components/Login.css)
+- Dashboard
+    - [Dashboard.jsx](fitness/app/javascript/components/Dashboard.jsx)
+- Session management
+    - [sessions_controller.rb](fitness/app/controllers/api/sessions_controller.rb)
+    - [application_controller.rb](fitness/app/controllers/application_controller.rb)
+    - [App.jsx](fitness/app/javascript/components/App.jsx)
+
 ## Importing food datasets into PostgreSQL
 CSV files, sample SQL statements, and output files for Food and Food Group tables are in the `datasets` folder.
 

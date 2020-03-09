@@ -2,7 +2,7 @@ class Api::SessionsController < ApplicationController
   def create
       @user = User.find_by(email: session_params[:email])
     
-      if @user && @user.authenticate(session_params[:password])
+      if @user && @user.password == session_params[:password]
         login!
         render json: {
           logged_in: true,
@@ -11,13 +11,11 @@ class Api::SessionsController < ApplicationController
       else
         render json: { 
           status: 401,
-          errors: ['no such user', 'verify credentials and try again or signup']
+          errors: ['Invalid credentials!']
         }
       end
     end
   def is_logged_in?
-      puts('logged in as')
-      puts(session[:user_id])
       if logged_in? && session[:user_id]
         render json: {
           logged_in: true,

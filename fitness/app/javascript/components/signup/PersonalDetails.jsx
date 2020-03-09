@@ -72,7 +72,7 @@ class PersonalDetails extends React.Component {
       alert =
         <div className='alert alert-danger' role='alert'>
           {Object.keys(errors).map((key, _) => (
-            <p>{key}: {errors[key]}</p>
+            <div>{key}: {errors[key]}</div>
           ))}
         </div>;
     }

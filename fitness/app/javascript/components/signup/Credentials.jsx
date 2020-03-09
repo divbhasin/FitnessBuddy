@@ -84,7 +84,7 @@ class Credentials extends React.Component {
       alert =
         <div className="alert alert-danger" role="alert">
           {Object.keys(errors).map((key, index) => (
-            <p key={index}>{key}: {errors[key]}</p>
+            <div key={index}>{key}: {errors[key]}</div>
           ))}
         </div>;
     }
