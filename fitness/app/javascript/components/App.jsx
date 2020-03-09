@@ -23,15 +23,16 @@ class App extends Component {
   }
 
   loginStatus = () => {
-    axios.get('/api/logged_in', { withCredentials: true })
-      .then(({ data }) => {
-        if (data.logged_in) {
-          this.handleLogin(data)
-        } else {
-          this.handleLogout()
-        }
-      })
-      .catch(error => console.log('api errors:', error))
+    // axios.get('/api/logged_in', { withCredentials: true })
+    //   .then(({ data }) => {
+    //     if (data.logged_in) {
+    //       this.handleLogin(data)
+    //     } else {
+    //       this.handleLogout()
+    //     }
+    //   })
+    //   .catch(error => console.log('api errors:', error))
+    return true
   }
 
   handleLogin = (data) => {
