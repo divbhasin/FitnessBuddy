@@ -36,7 +36,7 @@ class FitnessGoals extends React.Component {
       alert =
         <div className="alert alert-danger" role="alert">
           {Object.keys(backend_errors).map((key, _) => (
-            <p>{key}: {backend_errors[key]}</p>
+            <div>{key}: {backend_errors[key]}</div>
           ))}
         </div>;
     }

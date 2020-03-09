@@ -12,3 +12,8 @@
     max-width: 320px;
   }
 }
+
+button:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
+}
