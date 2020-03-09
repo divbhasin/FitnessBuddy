@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 import './Login.css';
 
+const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
+
 class Login extends React.Component {
   constructor(props) {
     super(props)
@@ -14,7 +16,6 @@ class Login extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.validateForm = this.validateForm.bind(this);
   }
 
   componentWillMount() {
@@ -25,19 +26,21 @@ class Login extends React.Component {
     this.props.history.push('/')
   }
 
-  validateForm(errors) {
-    let valid = true;
-    Object.values(errors).forEach(
-      // if we have an error string set valid to false
-      (val) => val.length > 0 && (valid = false)
-    );
-    return valid;
-  }
-
   handleChange(event) {
     event.preventDefault();
     const { name, value } = event.target;
     this.setState({ [name]: value });
+    let errors = this.state.errors;
+    
+    switch (name) {
+      case 'email':
+        if (!validEmailRegex.test(value)) {
+          errors.email = 'Email is not valid!';
+        } else {
+          delete errors.email;
+        }
+        break;
+    }
   }
 
   handleSubmit(event) {
@@ -51,27 +54,38 @@ class Login extends React.Component {
       email: this.state.email.toLowerCase(),
       password: this.state.password
     }
-    /*
-    axios.post('/api/v1/users', { user: user })
+
+    axios.post('/api/login', { user: user }, { withCredentials: true })
       .then(({ data }) => {
         if ('errors' in data) {
           this.setState( { errors: data.errors } )
         } else {
-          window.location.href = '/'
+          this.props.handleLogin(data)
+          this.redirect()
         }
       })
       .catch(errs => { console.log(errs) })
-    */
   }
 
   render() {
-    const { email, password } = this.state;
-    const isButtonEnabled = email.length > 0 && password.length > 0;
+    const { email, password, errors } = this.state;
+    const isButtonEnabled = validEmailRegex.test(email) && email.length > 0 && password.length > 0;
+    let alert;
+
+    if (Object.keys(errors).length > 0) {
+      alert =
+        <div className='alert alert-danger' role='alert'>
+          {Object.keys(errors).map((key, _) => (
+            <div>{errors[key]}</div>
+          ))}
+        </div>;
+    }
 
     return (
       <div className='login'>
         <h1>Log In</h1>
         <form onSubmit={this.handleSubmit}>
+          {alert}
           <FormGroup controlId='email' bsSize='large'>
             <FormLabel>Email</FormLabel>
             <FormControl
