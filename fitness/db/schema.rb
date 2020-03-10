@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_09_222731) do
+ActiveRecord::Schema.define(version: 2020_03_10_014927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gin"
@@ -136,6 +136,7 @@ ActiveRecord::Schema.define(version: 2020_03_09_222731) do
     t.decimal "protein", precision: 8, scale: 2, null: false
     t.decimal "fat", precision: 8, scale: 2, null: false
     t.decimal "fibre", precision: 8, scale: 2, null: false
+    t.index ["name"], name: "name_index"
   end
 
   create_table "goals", id: :serial, force: :cascade do |t|
