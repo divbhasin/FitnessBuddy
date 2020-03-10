@@ -43,8 +43,10 @@ Our schema can be found as a collection of `migration`s located in `/fitness/db/
     - [application_controller.rb](fitness/app/controllers/application_controller.rb)
     - [App.jsx](fitness/app/javascript/components/App.jsx)
 
-## Importing food datasets into PostgreSQL
+## How to Load Production Datasets into PostgreSQL
 CSV files, sample SQL statements, and output files for Food and Food Group tables are in the `datasets` folder.
+Note that we only need to load the `foods` and `food_groups` datasets. The rest of the data in our application
+will be user-driven.
 
 ### Food group table
 **Create table:**
