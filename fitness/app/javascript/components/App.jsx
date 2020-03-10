@@ -5,6 +5,7 @@ import Home from './Home';
 import Signup from './Signup';
 import Login from './Login';
 import MyNavBar from './MyNavBar'
+import Profile from './Profile'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
@@ -60,6 +61,7 @@ class App extends Component {
             <Route exact path='/' render={props => <Home {...props} checkedLogin={this.state.checkedLogin} isLoggedIn={this.state.isLoggedIn} handleLogout={this.handleClick} user={this.state.user} />} />
             <Route path='/signup' render={props => <Signup {...props} checkedLogin={this.state.checkedLogin} isLoggedIn={this.state.isLoggedIn} handleLogin={this.handleLogin}/>} />
             <Route exact path='/login' render={props => <Login {...props} checkedLogin={this.state.checkedLogin} isLoggedIn={this.state.isLoggedIn} handleLogin={this.handleLogin}/>} />
+            <Route path='/user/profile' render={props => <Profile {...props} checkedLogin={this.state.checkedLogin} user={this.state.user} />} />
           </Switch>
           </div>
         </Router>
