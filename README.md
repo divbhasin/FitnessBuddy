@@ -14,12 +14,11 @@
 6. Go to [http://127.0.0.1:3000](http://127.0.0.1:3000) in your web browser
 
 ### Running Tests
-1. Run the command `rails test` within the `fitness` directory.
+1\. Run the command `rails test` within the `fitness` directory.
    - To ensure correctness, no test should have returned an error or failure.
    - Tests can be found in the `fitness/test/models` directory.
-<br></br>
 
-2. To test the production datasets, go to the `datasets` directory and run `run_tests.sh`
+2\. To test the production datasets, go to the `datasets` directory and run `run_tests.sh`
    - Please see `test-production.sql` for other comments/instructions
    - Expected output can be found in `test-production.out`
 
