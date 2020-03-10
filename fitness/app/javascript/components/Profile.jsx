@@ -2,11 +2,13 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import {withRouter} from "react-router";
 import {Col, Button} from 'react-bootstrap';
+import './Login.css';
 
 class Profile extends React.Component {
     render() {
         const { isLoggedIn, user } = this.props;
         return (
+            <div className="login">
             <Form>
                 <Form.Row>
                     <Form.Group as={Col} controlId="formGridEmail">
@@ -14,9 +16,9 @@ class Profile extends React.Component {
                     <Form.Control type="email" readonly defaultValue={user.email} />
                     </Form.Group>
 
-                    <Form.Group as={Col} controlId="formGridPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" />
+                    <Form.Group as={Col} controlId="formGridFirst">
+                    <Form.Label>First name</Form.Label>
+                    <Form.Control readonly defaultValue={user.first_name} />
                     </Form.Group>
                 </Form.Row>
 
@@ -54,6 +56,7 @@ class Profile extends React.Component {
                     Submit
                 </Button>
             </Form>
+            </div>
         )
     }
 }
