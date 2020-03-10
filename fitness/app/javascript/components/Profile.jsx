@@ -4,56 +4,82 @@ import {withRouter} from "react-router";
 import {Col, Button} from 'react-bootstrap';
 import './Login.css';
 
+const activity_mappings = {
+    1: 'Sedentary Excercise',
+    2: 'Light Excercise',
+    3: 'Moderate Excercise',
+    4: 'Heavy Excercise',
+    5: 'Athlete'
+}
+
+const goal_mappings = {
+    1: 'Maintain my weight',
+    2: 'Gain 0.5 lb per week',
+    3: 'Gain 1 lb per week',
+    4: 'Lose 0.5 lb per week',
+    5: 'Lose 1 lb per week'
+}
+
 class Profile extends React.Component {
     render() {
         const { isLoggedIn, user } = this.props;
+        user.fitness_goal = goal_mappings[user.goal_id]
+        user.activity_level = activity_mappings[user.activity_level_id]
+
         return (
             <div className="login">
             <Form>
-                <Form.Row>
-                    <Form.Group as={Col} controlId="formGridEmail">
+                <Form.Group controlId="formGridEmail">
                     <Form.Label>Email</Form.Label>
-                    <Form.Control type="email" readonly defaultValue={user.email} />
-                    </Form.Group>
-
-                    <Form.Group as={Col} controlId="formGridFirst">
-                    <Form.Label>First name</Form.Label>
-                    <Form.Control readonly defaultValue={user.first_name} />
-                    </Form.Group>
-                </Form.Row>
-
-                <Form.Group controlId="formGridAddress1">
-                    <Form.Label>Address</Form.Label>
-                    <Form.Control placeholder="1234 Main St" />
-                </Form.Group>
-
-                <Form.Group controlId="formGridAddress2">
-                    <Form.Label>Address 2</Form.Label>
-                    <Form.Control placeholder="Apartment, studio, or floor" />
+                    <Form.Control type="email" readOnly defaultValue={user.email} />
                 </Form.Group>
 
                 <Form.Row>
-                    <Form.Group as={Col} controlId="formGridCity">
-                    <Form.Label>City</Form.Label>
-                    <Form.Control />
+                    <Form.Group as={Col} controlId="formGridFirst">
+                        <Form.Label>First name</Form.Label>
+                        <Form.Control readOnly defaultValue={user.first_name} />
                     </Form.Group>
 
-                    <Form.Group as={Col} controlId="formGridState">
-                    <Form.Label>State</Form.Label>
-                    <Form.Control as="select">
-                        <option>Choose...</option>
-                        <option>...</option>
-                    </Form.Control>
-                    </Form.Group>
-
-                    <Form.Group as={Col} controlId="formGridZip">
-                    <Form.Label>Zip</Form.Label>
-                    <Form.Control />
+                    <Form.Group controlId="formGridLast">
+                        <Form.Label>Last name</Form.Label>
+                        <Form.Control readOnly defaultValue={user.last_name} />
                     </Form.Group>
                 </Form.Row>
+
+                <Form.Group controlId="formGridAge">
+                    <Form.Label>Age</Form.Label>
+                    <Form.Control readOnly defaultValue={user.age} />
+                </Form.Group>
+
+                <Form.Row>
+                    <Form.Group as={Col} controlId="formGridGender">
+                        <Form.Label>Gender</Form.Label>
+                        <Form.Control readOnly defaultValue={user.gender} />
+                    </Form.Group>
+
+                    <Form.Group as={Col} controlId="formGridHeight">
+                        <Form.Label>Height</Form.Label>
+                        <Form.Control readOnly defaultValue={user.height} />
+                    </Form.Group>
+
+                    <Form.Group as={Col} controlId="formGridWeight">
+                        <Form.Label>Weight</Form.Label>
+                        <Form.Control readOnly defaultValue={user.weight} />
+                    </Form.Group>
+                </Form.Row>
+
+                <Form.Group controlId="formGridGoal">
+                    <Form.Label>Goal</Form.Label>
+                    <Form.Control readOnly defaultValue={user.fitness_goal} />
+                </Form.Group>
+
+                <Form.Group controlId="formGridActivity">
+                    <Form.Label>Activity Level</Form.Label>
+                    <Form.Control readOnly defaultValue={user.activity_level} />
+                </Form.Group>
 
                 <Button variant="primary" type="submit">
-                    Submit
+                    Edit Profile
                 </Button>
             </Form>
             </div>
