@@ -17,6 +17,7 @@
 1. Run the command `rails test` within the `fitness` directory.
    - To ensure correctness, no test should have returned an error or failure.
    - Tests can be found in the `fitness/test/models` directory.
+<br></br>
 
 2. To test the production datasets, go to the `datasets` directory and run `run_tests.sh`
    - Please see `test-production.sql` for other comments/instructions
