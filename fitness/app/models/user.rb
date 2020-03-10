@@ -6,6 +6,6 @@ class User < ApplicationRecord
   validates_presence_of :password
   validates :password, length: { minimum: 8 }
 
-  has_one :activity_level
-  has_one :goal
+  belongs_to :activity_level
+  belongs_to :goal
 end
