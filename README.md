@@ -40,6 +40,8 @@ Our schema can be found as a collection of `migration`s located in `/fitness/db/
     - [application_controller.rb](fitness/app/controllers/application_controller.rb)
     - [Login.jsx](fitness/app/javascript/components/Login.jsx)
     - [Login.css](fitness/app/javascript/components/Login.css)
+- User Profile
+    - [Profile.jsx](fitness/app/javascript/components/Profile.jsx)
 - Dashboard
     - [Dashboard.jsx](fitness/app/javascript/components/Dashboard.jsx)
 - Session management
