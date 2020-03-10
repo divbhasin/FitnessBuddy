@@ -1,0 +1,34 @@
+ count 
+-------
+  6347
+(1 row)
+
+ count 
+-------
+    13
+(1 row)
+
+  id  | food_group_id |      name      | calories | carbs | protein |  fat  | fibre 
+------+---------------+----------------+----------+-------+---------+-------+-------
+ 1001 |             1 | Butter, salted |   717.00 |  0.06 |    0.85 | 81.11 |  0.00
+(1 row)
+
+  id  | food_group_id |                              name                              | calories | carbs | protein | fat  | fibre 
+------+---------------+----------------------------------------------------------------+----------+-------+---------+------+-------
+ 1012 |             1 | Cheese, cottage, creamed, large or small curd                  |    98.00 |  3.38 |   11.12 | 4.30 |  0.00
+ 1013 |             1 | Cheese, cottage, creamed, with fruit                           |    97.00 |  4.61 |   10.69 | 3.85 |  0.20
+ 1014 |             1 | Cheese, cottage, nonfat, uncreamed, dry, large or small curd   |    72.00 |  6.66 |   10.34 | 0.29 |  0.00
+ 1015 |             1 | Cheese, cottage, lowfat, 2% milkfat                            |    81.00 |  4.76 |   10.45 | 2.27 |  0.00
+ 1016 |             1 | Cheese, cottage, lowfat, 1% milkfat                            |    72.00 |  2.72 |   12.39 | 1.02 |  0.00
+ 1057 |             1 | Eggnog                                                         |    88.00 |  8.05 |    4.55 | 4.19 |  0.00
+ 1059 |             1 | Milk, filled, fluid, with blend of hydrogenated vegetable oils |    63.00 |  4.74 |    3.33 | 3.46 |  0.00
+ 1060 |             1 | Milk, filled, fluid, with lauric acid oil                      |    63.00 |  4.74 |    3.33 | 3.40 |  0.00
+ 1076 |             1 | Milk substitutes, fluid, with lauric acid oil                  |    61.00 |  6.16 |    1.75 | 3.41 |  0.00
+ 1077 |             1 | Milk, whole, 3.25% milkfat, with added vitamin D               |    61.00 |  4.80 |    3.15 | 3.25 |  0.00
+(10 rows)
+
+          name          
+------------------------
+ Dairy and egg products
+(1 row)
+

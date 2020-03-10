@@ -18,6 +18,10 @@
    - To ensure correctness, no test should have returned an error or failure.
    - Tests can be found in the `fitness/test/models` directory.
 
+2. To test the production datasets, go to the `datasets` directory and run `run_tests.sh`
+   - Please see `test-production.sql` for other comments/instructions
+   - Expected output can be found in `test-production.out`
+
 ### Database schema
 Our schema can be found as a collection of `migration`s located in `/fitness/db/migrate`
 
