@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, DropdownButton, Dropdown } from 'react-bootstrap';
 import { withRouter } from "react-router";
 
 class MyNavBar extends React.Component {
@@ -28,8 +28,10 @@ class MyNavBar extends React.Component {
         <Navbar.Brand href="/">MyFitnessApp</Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
-          {isLoggedIn && <Navbar.Text>Signed in as: {user.email}</Navbar.Text>}
-          {isLoggedIn && <Nav.Link href="#" onClick={this.handleClick}>Logout</Nav.Link>}
+          {isLoggedIn && <DropdownButton title={user.email} variant="info">
+            <Dropdown.Item eventKey="1">Profile</Dropdown.Item>
+            <Dropdown.Item onClick={this.handleClick}>Logout</Dropdown.Item>
+          </DropdownButton>}
         </Navbar.Collapse>
       </Navbar>
     );
