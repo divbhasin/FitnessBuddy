@@ -1,0 +1,56 @@
+.react-bootstrap-table table {
+  table-layout: auto !important;
+}
+
+.spinner {
+  margin: 225px auto;
+  text-align: center;
+}
+
+.search-bar {
+  height: 50px !important;
+  font-size: x-large !important;
+}
+
+table tbody tr {
+  cursor: pointer;
+}
+
+.react-datepicker-popper {
+    z-index: 2;
+    top: 34px !important;
+    /* needed because we made it inline */
+
+}
+
+.react-datepicker-wrapper,
+.react-datepicker-wrapper .react-datepicker__input-container {
+    /* https://github.com/Hacker0x01/react-datepicker/issues/1672 */
+    width: 100%;
+
+    /* to make it exactly the same height as the bootstrap input-group-addons */
+    display: inline;
+}
+
+.react-datepicker__day-name,
+.react-datepicker__day,
+.react-datepicker__time-name {
+    width: 2.7rem;
+    line-height: 2.7rem;
+    font-size: 1.1rem;
+}
+
+
+.react-datepicker__current-month,
+.react-datepicker-time__header {
+    font-size: 1.4rem;
+}
+
+
+.date.form-group .input-group-addon {
+    cursor: pointer;
+}
+
+.date.form-group .input-group-addon:hover {
+    opacity: 0.8;
+}

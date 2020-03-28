@@ -92,8 +92,13 @@ class Signup extends React.Component {
 
   render() {
     const { step } = this.state;
+    const { checkedLogin, isLoggedIn } = this.props;
     const { first_name, last_name, email, password, confirm_password, gender, age, height, weight, activity_level, fitness_goal, errors } = this.state;
     const values = { first_name, last_name, email, password, confirm_password, gender, age, height, weight, activity_level, fitness_goal, errors };
+    
+    if (checkedLogin && isLoggedIn) {
+      this.props.history.push('/');
+    }
 
     switch (step) {
       case 1:

@@ -18,7 +18,7 @@ class Dashboard extends Component {
           {user.email}, get started by adding your meals for the day!
           </p>
           <hr className="my-4" />
-          <Link to="/food" className="btn btn-lg custom-button mr-2" role="button">Add Food</Link>
+          <Link to="/pick_food" className="btn btn-lg custom-button mr-2" role="button">Add Food</Link>
         </div>
       </div>
     );
