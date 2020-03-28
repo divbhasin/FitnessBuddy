@@ -69,8 +69,13 @@ class Login extends React.Component {
 
   render() {
     const { email, password, errors } = this.state;
+    const { checkedLogin, isLoggedIn } = this.props;
     const isButtonEnabled = validEmailRegex.test(email) && email.length > 0 && password.length > 0;
     let alert;
+    
+    if (checkedLogin && isLoggedIn) {
+      this.props.history.push('/');
+    }
 
     if (Object.keys(errors).length > 0) {
       alert =
