@@ -27,6 +27,18 @@ class Api::UsersController < ApplicationController
     end
   end
 
+  def update
+    @user = User.where(email: params[:user][:email]).take
+
+    if @user.update(user_params)
+      render json: {
+        user: @user
+      }
+    else
+      render json: { errors: @user.errors }
+    end
+  end
+
   def create
     @user = User.new(user_params)
     if @user.save
@@ -46,7 +58,17 @@ class Api::UsersController < ApplicationController
     a = ActivityLevel.find_by(description: h[:activity_level])
     h.delete(:activity_level)
     h.delete(:fitness_goal)
-    h.merge!({activity_level_id: a.id, goal_id: g.id})
+    activity_goal = {}
+
+    if a
+      activity_goal[:activity_level_id] = a.id
+    end
+
+    if g
+      activity_goal[:goal_id] = g.id
+    end
+
+    h.merge!(activity_goal)
     h.to_h
   end
 end
