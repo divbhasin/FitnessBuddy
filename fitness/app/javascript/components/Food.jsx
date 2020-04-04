@@ -72,6 +72,7 @@ class Food extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
   }
 
   componentWillMount() {
@@ -93,6 +94,14 @@ class Food extends Component {
     event.preventDefault();
     const { name, value } = event.target;
     this.setState({ [name]: value });
+  }
+
+  handleBlur(event) {
+    event.preventDefault();
+    const { name, value } = event.target;
+    if (name == 'grams' && !value) {
+      this.setState({ [name]: 100 });
+    }
   }
 
   handleSubmit(event) {
@@ -128,6 +137,7 @@ class Food extends Component {
   render() {
     const { isLoading, columns, data, date, grams, selectedFood, showModal } = this.state;
     const { checkedLogin, isLoggedIn, user } = this.props;
+    const multFactor = grams / 100.0;
 
     if (checkedLogin && !isLoggedIn) {
       return null;
@@ -169,14 +179,12 @@ class Food extends Component {
           <Form onSubmit={this.handleSubmit}>
             <Modal.Body>
               <p>
-                <b>ID:</b> {selectedFood.id}<br/>
-                <b>Food Group:</b> {selectedFood.food_group_id}<br />
                 <b>Name:</b> {selectedFood.name}<br />
-                <b>Calories:</b> {selectedFood.calories}<br />
-                <b>Carbs:</b> {selectedFood.carbs}<br />
-                <b>Protein:</b> {selectedFood.protein}<br />
-                <b>Fat:</b> {selectedFood.fat}<br />
-                <b>Fibre:</b> {selectedFood.fibre}<br />
+                <b>Calories:</b> {(selectedFood.calories * multFactor).toFixed(1)}<br />
+                <b>Carbs:</b> {(selectedFood.carbs * multFactor).toFixed(1)}<br />
+                <b>Protein:</b> {(selectedFood.protein * multFactor).toFixed(1)}<br />
+                <b>Fat:</b> {(selectedFood.fat * multFactor).toFixed(1)}<br />
+                <b>Fibre:</b> {(selectedFood.fibre * multFactor).toFixed(1)}<br />
               </p>
               <Form.Row>
                 <Form.Group as={Col} controlId="formDate">
@@ -194,9 +202,10 @@ class Food extends Component {
                   <Form.Control 
                     name="grams"
                     type="number"
-                    defaultValue={grams}
+                    value={grams}
                     min="1"
-                    onChange={this.handleChange} />
+                    onChange={this.handleChange}
+                    onBlur={this.handleBlur} />
                 </Form.Group>
               </Form.Row>
             </Modal.Body>
