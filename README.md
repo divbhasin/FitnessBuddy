@@ -44,6 +44,12 @@ Our schema can be found as a collection of `migration`s located in `/fitness/db/
     - [Profile.jsx](fitness/app/javascript/components/Profile.jsx)
 - Dashboard
     - [Dashboard.jsx](fitness/app/javascript/components/Dashboard.jsx)
+- History
+    - [History.jsx](fitness/app/javascript/components/history/History.jsx)
+    - [History.css](fitness/app/javascript/components/history/History.css)
+- Food Picker
+    - [Food.jsx](fitness/app/javascript/components/Food.jsx)
+    - [Food.css](fitness/app/javascript/components/Food.css)
 - Session management
     - [sessions_controller.rb](fitness/app/controllers/api/sessions_controller.rb)
     - [application_controller.rb](fitness/app/controllers/application_controller.rb)
