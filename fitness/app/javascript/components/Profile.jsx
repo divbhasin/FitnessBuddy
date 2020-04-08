@@ -67,8 +67,6 @@ class Profile extends React.Component {
         const { isLoggedIn, user } = this.props;
         user.fitness_goal = goal_mappings[user.goal_id]
         user.activity_level = activity_mappings[user.activity_level_id]
-        console.log(user)
-        console.log(this.state)
 
         return (
             <div className="login">
@@ -92,25 +90,56 @@ class Profile extends React.Component {
 
                 <Form.Group controlId="formGridAge">
                     <Form.Label>Age</Form.Label>
-                    <Form.Control name="age" defaultValue={user.age} onChange={this.handleChange}/>
+                    <Form.Control
+                      name="age"
+                      type="number"
+                      min="1"
+                      max="100"
+                      step="1"
+                      defaultValue={user.age}
+                      onChange={this.handleChange} />
                 </Form.Group>
 
                 <Form.Row>
                     <Form.Group as={Col} controlId="formGridGender">
                         <Form.Label>Gender</Form.Label>
-                        <Form.Control name="gender" defaultValue={user.gender} onChange={this.handleChange}/>
+                        <Form.Control
+                          autoFocus
+                          name="gender"
+                          as="select"
+                          defaultValue={user.gender || "Default"}
+                          onChange={this.handleChange}>
+                          <option disabled value="Default">Choose Gender...</option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                          <option value="Other">Other</option>
+                        </Form.Control>
                     </Form.Group>
 
                     <Form.Group as={Col} controlId="formGridHeight">
-                        <Form.Label>Height</Form.Label>
-                        <Form.Control name="height" defaultValue={user.height} onChange={this.handleChange}/>
+                        <Form.Label>Height (cm) </Form.Label>
+                        <Form.Control
+                          name="height"
+                          type="number"
+                          min="1"
+                          max="200"
+                          step="1"
+                          defaultValue={user.height}
+                          onChange={this.handleChange} />
                     </Form.Group>
 
                     <Form.Group as={Col} controlId="formGridWeight">
-                        <Form.Label>Weight</Form.Label>
-                        <Form.Control name="weight" defaultValue={user.weight} onChange={this.handleChange}/>
+                        <Form.Label>Weight (lbs) </Form.Label>
+                        <Form.Control
+                          name="weight"
+                          type="number"
+                          min="1"
+                          max="1000"
+                          step="1"
+                          defaultValue={user.weight}
+                          onChange={this.handleChange} />
                     </Form.Group>
-                </Form.Row>
+                  </Form.Row>
 
                 <Form.Group controlId="formGridGoal">
                   <Form.Label>Goal</Form.Label>
