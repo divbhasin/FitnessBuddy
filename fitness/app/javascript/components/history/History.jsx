@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import data from './data';
 import { Layout } from 'antd';
-import View1 from './views/View1';
+import ProfileView from './views/ProfileView';
 import View2 from './views/View2';
 import View3 from './views/View3';
 import View4 from './views/View4';
@@ -41,6 +41,13 @@ class History extends Component {
     }
 
     render() {
+        const { checkedLogin, isLoggedIn, user } = this.props;
+        if (!checkedLogin) {
+            return null;
+        } else if (!isLoggedIn) {
+            this.props.history.push('/');
+        }
+
         const {selectedUser, greaterThenAge, includedGender} = this.state;
         const filteredData = data.filter(user=>includedGender.indexOf(user.gender)!==-1)
                                  .filter(user=>user.age>greaterThenAge);
@@ -48,8 +55,8 @@ class History extends Component {
             <div>
                 <Layout style={{ height: 920 }}>
                     <Sider width={300} style={{backgroundColor:'#eee'}}>
-                        <Content style={{ height: 200 }}>
-                            <View1 user={selectedUser}/>
+                        <Content style={{ height: 220 }}>
+                            <ProfileView user={user}/>
                         </Content>
                         <Content style={{ height: 300 }}>
                             <View2 data={filteredData}/>
