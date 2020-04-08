@@ -32,6 +32,12 @@ class MyNavBar extends React.Component {
       <Navbar bg="light" expand="lg">
         <Navbar.Brand href="/">MyFitnessApp</Navbar.Brand>
         <Navbar.Toggle />
+        <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="mr-auto">
+          <Nav.Link href="/">Daily View</Nav.Link>
+          <Nav.Link href="/history">History</Nav.Link>
+        </Nav>
+        </Navbar.Collapse>
         <Navbar.Collapse className="justify-content-end">
           {isLoggedIn && <DropdownButton title={user.email} variant="info">
             <Dropdown.Item onClick={this.redirectToProfile}>Profile</Dropdown.Item>
