@@ -63,7 +63,7 @@ class App extends Component {
             <Route exact path='/' render={props => <Home {...props} checkedLogin={this.state.checkedLogin} isLoggedIn={this.state.isLoggedIn} handleLogout={this.handleClick} user={this.state.user} />} />
             <Route path='/signup' render={props => <Signup {...props} checkedLogin={this.state.checkedLogin} isLoggedIn={this.state.isLoggedIn} handleLogin={this.handleLogin}/>} />
             <Route exact path='/login' render={props => <Login {...props} checkedLogin={this.state.checkedLogin} isLoggedIn={this.state.isLoggedIn} handleLogin={this.handleLogin}/>} />
-            <Route path='/user/profile' render={props => <Profile {...props} checkedLogin={this.state.checkedLogin} user={this.state.user} />} />
+              <Route path='/user/profile' render={props => <Profile {...props} checkedLogin={this.state.checkedLogin} user={this.state.user} refreshUser={this.loginStatus} />} />
             <Route path='/pick_food' render={props => <Food {...props} isLoggedIn={this.state.isLoggedIn} checkedLogin={this.state.checkedLogin} user={this.state.user} />} />
             <Route path='/history' render={props => <History {...props} isLoggedIn={this.state.isLoggedIn} checkedLogin={this.state.checkedLogin} user={this.state.user} />} />
           </Switch>

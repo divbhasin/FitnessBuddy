@@ -57,6 +57,7 @@ class Profile extends React.Component {
         if ('errors' in data) {
           this.setState( { errors: data.errors } )
         } else {
+          this.props.refreshUser()
           this.props.history.push('/')
         }
       })
@@ -110,9 +111,9 @@ class Profile extends React.Component {
                           defaultValue={user.gender || "Default"}
                           onChange={this.handleChange}>
                           <option disabled value="Default">Choose Gender...</option>
-                          <option value="Male">Male</option>
-                          <option value="Female">Female</option>
-                          <option value="Other">Other</option>
+                          <option value="male">Male</option>
+                          <option value="female">Female</option>
+                          <option value="other">Other</option>
                         </Form.Control>
                     </Form.Group>
 
