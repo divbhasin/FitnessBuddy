@@ -27,6 +27,21 @@ class Api::UsersController < ApplicationController
     end
   end
 
+  def daily_analytics 
+    calories_results = ActiveRecord::Base.connection.execute(daily_calculator_query("calories"))
+    carbs_results = ActiveRecord::Base.connection.execute(daily_calculator_query("carbs"))
+    protein_results = ActiveRecord::Base.connection.execute(daily_calculator_query("protein"))
+    fat_results = ActiveRecord::Base.connection.execute(daily_calculator_query("fat"))
+    fibre_results = ActiveRecord::Base.connection.execute(daily_calculator_query("fibre"))
+    render json: {
+      calories_results: calories_results,
+      carbs_results: carbs_results,
+      protein_results: protein_results,
+      fat_results: fat_results,
+      fibre_results: fibre_results
+    }
+  end
+
   def update
     @user = User.where(email: params[:user][:email]).take
 
@@ -70,5 +85,18 @@ class Api::UsersController < ApplicationController
 
     h.merge!(activity_goal)
     h.to_h
+  end
+
+  def daily_calculator_query(macro)
+    code = <<-SQL
+      SELECT t.count, to_char(t.date, 'yyyy-mm-dd') as date FROM (
+        SELECT sum(foods.#{macro} * (food_histories.servings / 100)) as count, date_trunc('day', food_histories.created_at) as date
+        FROM users, foods, food_histories
+        WHERE users.id = #{current_user.id} AND food_histories.user_id = users.id AND food_histories.food_id = foods.id 
+        GROUP BY date_trunc('day', food_histories.created_at)
+        HAVING date_trunc('day', food_histories.created_at) > now() - interval '1 month'
+        AND date_trunc('day', food_histories.created_at) <= now()
+      ) AS t;
+    SQL
   end
 end
