@@ -107,11 +107,12 @@ class Food extends Component {
   handleSubmit(event) {
     event.preventDefault();
     this.handleModalClose();
-    console.log('date: ' + this.state.date);
-    console.log('grams: ' + this.state.grams);
-    console.log('user: ' + this.props.user);
-    // Make API request
-    this.props.history.push('/');
+
+    let food_history = { food_id: this.state.selectedFood.id,
+      servings: this.state.grams, created_at: this.state.date};
+
+    axios.post('/api/food_histories', { food_history }, { withCredentials: true })
+      .catch(error => console.log('api errors:', error))
   }
 
   handleDateChange = (date) => {

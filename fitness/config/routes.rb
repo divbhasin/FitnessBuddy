@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     get '/logged_in', to: 'sessions#is_logged_in?'
     resources :users, only: [:create, :show, :index, :update]
     resources :foods, only: [:index]
+    resources :food_histories, only: [:index, :create]
   end
 
   root 'homepage#index'
