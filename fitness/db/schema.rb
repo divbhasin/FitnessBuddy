@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_10_014927) do
+ActiveRecord::Schema.define(version: 2020_04_09_171345) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gin"
@@ -128,6 +128,14 @@ ActiveRecord::Schema.define(version: 2020_03_10_014927) do
     t.string "name", null: false
   end
 
+  create_table "food_histories", primary_key: ["id", "food_id", "user_id"], force: :cascade do |t|
+    t.serial "id", null: false
+    t.integer "food_id", null: false
+    t.integer "user_id", null: false
+    t.decimal "servings", precision: 8, scale: 2, null: false
+    t.datetime "created_at", null: false
+  end
+
   create_table "foods", id: :serial, force: :cascade do |t|
     t.integer "food_group_id", null: false
     t.string "name", null: false
@@ -179,6 +187,8 @@ ActiveRecord::Schema.define(version: 2020_03_10_014927) do
   add_foreign_key "auth_user_user_permissions", "auth_user", column: "user_id", name: "auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id"
   add_foreign_key "django_admin_log", "auth_user", column: "user_id", name: "django_admin_log_user_id_c564eba6_fk_auth_user_id"
   add_foreign_key "django_admin_log", "django_content_type", column: "content_type_id", name: "django_admin_log_content_type_id_c4bce8eb_fk_django_co"
+  add_foreign_key "food_histories", "foods", name: "food_histories_food_id_fkey"
+  add_foreign_key "food_histories", "users", name: "food_histories_user_id_fkey"
   add_foreign_key "foods", "food_groups", name: "foods_food_group_id_fkey"
   add_foreign_key "users", "activity_levels", name: "users_activity_level_id_fkey"
   add_foreign_key "users", "goals", name: "users_goal_id_fkey"

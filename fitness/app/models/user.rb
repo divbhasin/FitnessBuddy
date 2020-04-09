@@ -8,4 +8,6 @@ class User < ApplicationRecord
 
   belongs_to :activity_level
   belongs_to :goal
+
+  has_many :food_history
 end
