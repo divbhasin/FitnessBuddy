@@ -40,6 +40,10 @@ class Dashboard extends Component {
       history: [],
       isLoading: true,
       tdee: this.calcTDEE(props.user),  
+      calories: 0,
+      fat: 0,
+      protein: 0,
+      carbs: 0
     }
   }
 
@@ -55,7 +59,7 @@ class Dashboard extends Component {
     }
 
     const tdee = activity_factors[user.activity_level_id] * bmr
-    const goal_calories = (1 + multiplier[user.goal_id]) * tdee
+    var goal_calories = (1 + multiplier[user.goal_id]) * tdee
     goal_calories = Number((goal_calories).toFixed(1))
 
     return goal_calories 
@@ -85,12 +89,37 @@ class Dashboard extends Component {
     return new_history
   }
 
+  calcMacros(history) {
+    var macros = {
+      fats: 0,
+      carbs: 0,
+      protein: 0,
+      calories: 0
+    }
+
+    for (var h of history) {
+      console.log(h)
+      macros.fats += parseFloat(h.fat)
+      macros.calories += parseFloat(h.calories)
+      macros.carbs += parseFloat(h.carbs)
+      macros.protein += parseFloat(h.protein)
+    }
+
+    return macros
+  }
+
   getHistory = () => {
     axios.get('/api/food_histories')
       .then(({ data }) => {
+        var td_history = this.filterToday(data.food_history)
+        var macros = this.calcMacros(td_history)
+
         this.setState({
-          history: this.filterToday(data.food_history),
-          isLoading: false
+          history: td_history,
+          carbs: macros.carbs,
+          fats: macros.fats,
+          calories: macros.calories,
+          protein: macros.protein,
         });
       })
       .catch(error => console.log('api errors:', error))
@@ -128,11 +157,7 @@ class Dashboard extends Component {
                 Caloric goal: {this.state.tdee} 
               </Card.Text>
 
-            <ProgressBar>
-              <ProgressBar striped variant="success" now={35} key={1} />
-              <ProgressBar variant="warning" now={20} key={2} />
-              <ProgressBar striped variant="danger" now={10} key={3} />
-            </ProgressBar>
+            <ProgressBar now={100 * this.state.calories / this.state.tdee} />
 
             </Card.Body>
           </Card>
