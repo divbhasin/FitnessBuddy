@@ -42,8 +42,6 @@ class Dashboard extends Component {
     for (var h of history) {
       if (h.created_at === today)
         new_history.push(h)
-      else
-        break
     }
     return new_history
   }
