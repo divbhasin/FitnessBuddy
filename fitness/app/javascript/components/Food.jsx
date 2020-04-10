@@ -95,6 +95,14 @@ class Food extends Component {
     event.preventDefault();
     const { name, value } = event.target;
     this.setState({ [name]: value });
+    axios.get('/api/foods/search', { withCredentials: true })
+      .then(({ data }) => {
+        this.setState({
+          isLoading: false,
+          data: data.foods
+        });
+      })
+      .catch(error => console.log('api errors:', error))
   }
 
   handleBlur(event) {
