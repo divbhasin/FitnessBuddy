@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Button, Col, Form, Modal, Spinner } from 'react-bootstrap';
+import { Alert, Button, Col, Form, Modal, Spinner } from 'react-bootstrap';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
@@ -27,6 +27,7 @@ class Food extends Component {
     this.state = {
       isLoading: true,
       showModal: false,
+      showToast: false,
       date: new Date(),
       grams: 100,
       selectedFood: {},
@@ -107,13 +108,18 @@ class Food extends Component {
   handleSubmit(event) {
     event.preventDefault();
     this.handleModalClose();
-
     let food_history = { food_id: this.state.selectedFood.id,
       servings: this.state.grams, created_at: this.formatDate(this.state.date)};
-
+    
     axios.post('/api/food_histories', { food_history }, { withCredentials: true })
+      .then(() => {
+        this.setState({ showToast: true })
+        setTimeout(() => {
+          this.setState({ showToast: false });
+        }, 3000);
+      })
       .catch(error => console.log('api errors:', error))
-  }
+   }
 
   handleDateChange = (date) => {
     this.setState({
@@ -143,7 +149,7 @@ class Food extends Component {
   };
 
   render() {
-    const { isLoading, columns, data, date, grams, selectedFood, showModal } = this.state;
+    const { isLoading, columns, data, date, grams, selectedFood, showModal, showToast } = this.state;
     const { checkedLogin, isLoggedIn, user } = this.props;
     const multFactor = grams / 100.0;
 
@@ -154,9 +160,15 @@ class Food extends Component {
     }
 
     const noDataIndication = isLoading ? <NoDataIndication /> : null;
+    let alert;
+
+    if (showToast) {
+      alert = <Alert variant='success'>Successfully added food.</Alert>;
+    }
   
     return (
       <div className="container secondary-color" style={{ marginTop: 50 }}>
+        {alert}
         <ToolkitProvider bootstrap4 keyField='id' data={data} columns={columns} search>
           {
             props => (
