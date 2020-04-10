@@ -12,4 +12,20 @@ class Api::FoodsController < ApplicationController
       }
     end
   end
+
+  def search
+    h = params.require(:params).permit(:query)
+    query = h[:query]
+    search_code = <<-SQL
+      SELECT * FROM foods
+      WHERE name LIKE '%#{query}%'
+    SQL
+    
+    search_results = ActiveRecord::Base.connection.execute(search_code)
+
+    render json: {
+      search_results: search_results
+    }
+  end
+
 end
