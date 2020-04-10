@@ -10,7 +10,7 @@ class Api::FoodHistoriesController < ApplicationController
       if food_history
         @ret_history = []
         food_history.each do |h|
-          @h = { name: h.food.name, servings: h.servings, created_at: h.created_at }
+          @h = { name: h.food.name, food_id: h.food_id, servings: h.servings, created_at: h.created_at }
           @ret_history << @h
         end
 
