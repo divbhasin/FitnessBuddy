@@ -11,6 +11,7 @@
     "axios": "^0.19.2",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "bootstrap": "^4.4.1",
+    "canvasjs": "^1.8.3",
     "d3": "^5.15.1",
     "jquery": "^3.4.1",
     "popper.js": "^1.16.1",
