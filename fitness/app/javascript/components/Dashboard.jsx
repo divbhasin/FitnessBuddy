@@ -138,12 +138,13 @@ class Dashboard extends Component {
     return (
       <div className="jumbotron jumbotron-fluid bg-transparent">
         <div className="container secondary-color">
-          <h1 className="display-4">Welcome!</h1>
+          <h1 className="display-4">Welcome</h1>
           <p className="lead">
-          {user.email}, get started by adding your meals for the day!
+          {user.first_name}, get started by adding your meals for the day!
           </p>
+          <Link to="/pick_food" className="btn btn-lg custom-button mr-2" role="button">Add Food</Link>
           <hr className="my-4" />
-          <h3 className="display-4">Today</h3>
+          <h3 className="display-5">Today</h3>
           <BootstrapTable 
             bootstrap4
             hover
@@ -161,8 +162,6 @@ class Dashboard extends Component {
 
             </Card.Body>
           </Card>
-          
-          <Link to="/pick_food" className="btn btn-lg custom-button mr-2" role="button">Add Food</Link>
         </div>
       </div>
     );
