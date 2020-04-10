@@ -109,7 +109,7 @@ class Food extends Component {
     this.handleModalClose();
 
     let food_history = { food_id: this.state.selectedFood.id,
-      servings: this.state.grams, created_at: this.state.date};
+      servings: this.state.grams, created_at: this.formatDate(this.state.date)};
 
     axios.post('/api/food_histories', { food_history }, { withCredentials: true })
       .catch(error => console.log('api errors:', error))
@@ -135,12 +135,19 @@ class Food extends Component {
     });
   }
 
+  formatDate = (d) => {
+    var yyyy = d.getFullYear().toString();
+    var mm = (d.getMonth() + 1).toString();       
+    var dd = d.getDate().toString();
+    return yyyy + '-' + (mm[1] ? mm : "0" + mm[0]) + '-' + (dd[1] ? dd : "0" + dd[0]);
+  };
+
   render() {
     const { isLoading, columns, data, date, grams, selectedFood, showModal } = this.state;
     const { checkedLogin, isLoggedIn, user } = this.props;
     const multFactor = grams / 100.0;
 
-    if (checkedLogin && !isLoggedIn) {
+    if (!checkedLogin) {
       return null;
     } else if (!isLoggedIn) {
       this.props.history.push('/login');
