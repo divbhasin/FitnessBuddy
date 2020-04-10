@@ -30,7 +30,7 @@ export default class ProfileView extends Component {
                 <div className='profile-info'>
                     <p>
                         <b>Name:</b> {user.first_name} {user.last_name}<br />
-                        <b>Gender:</b> {user.gender.capitalize()}<br />
+                        <b>Gender:</b> {user.gender ? user.gender.capitalize(): null}<br />
                         <b>Age:</b> {user.age}<br />
                         <b>Weight:</b> {user.weight} lbs<br />
                         <b>Height:</b> {user.height} cm<br />
