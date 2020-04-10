@@ -1,15 +1,22 @@
 class Api::FoodHistoriesController < ApplicationController
   def index
-    food_history = current_user.food_histories.order(created_at: desc)
-    if food_history
-      render json: {
-        food_history: food_history
-      }
-    else
+    if !current_user
       render json: {
         status: 500,
-        errors: ['no food history available']
+        errors: ['not logged in']
       }
+    else
+      food_history = current_user.food_history.order(created_at: :desc)
+      if food_history
+        render json: {
+          food_history: food_history
+        }
+      else
+        render json: {
+          status: 500,
+          errors: ['no food history available']
+        }
+      end
     end
   end
 
