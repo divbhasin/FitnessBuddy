@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_09_171345) do
+ActiveRecord::Schema.define(version: 2020_04_10_013104) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gin"
@@ -133,7 +133,7 @@ ActiveRecord::Schema.define(version: 2020_04_09_171345) do
     t.integer "food_id", null: false
     t.integer "user_id", null: false
     t.decimal "servings", precision: 8, scale: 2, null: false
-    t.datetime "created_at", null: false
+    t.date "created_at", null: false
   end
 
   create_table "foods", id: :serial, force: :cascade do |t|
