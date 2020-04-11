@@ -68,10 +68,12 @@ class Food extends Component {
         dataField: 'fibre',
         text: 'Fibre'
       }],
-      data: []
+      data: [],
+      originalData: []
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleQueryChange = this.handleQueryChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
   }
@@ -85,7 +87,8 @@ class Food extends Component {
       .then(({ data }) => {
         this.setState({
           isLoading: false,
-          data: data.foods
+          data: data.foods,
+          originalData: data.foods
         });
       })
       .catch(error => console.log('api errors:', error))
@@ -95,14 +98,21 @@ class Food extends Component {
     event.preventDefault();
     const { name, value } = event.target;
     this.setState({ [name]: value });
-    axios.get('/api/foods/search', { withCredentials: true })
+  }
+
+  handleQueryChange(event) {
+    const { name, value } = event.target;
+    console.log(value);
+
+    if (!value) {
+      this.setState({ data: this.state.originalData });
+    } else if (value.length > 3) {
+      axios.get('/api/food/search', { withCredentials: true, params: { query: value } }, )
       .then(({ data }) => {
-        this.setState({
-          isLoading: false,
-          data: data.foods
-        });
+        this.setState({ data: data.search_results });
       })
       .catch(error => console.log('api errors:', error))
+    }
   }
 
   handleBlur(event) {
@@ -137,7 +147,12 @@ class Food extends Component {
 
   handleModalClose = () => {
     this.setState({
-      showModal: false,
+      showModal: false
+    });
+  }
+
+  handleModalExit = () => {
+    this.setState({
       selectedFood: {}
     });
   }
@@ -177,30 +192,21 @@ class Food extends Component {
     return (
       <div className="container secondary-color" style={{ marginTop: 50 }}>
         {alert}
-        <ToolkitProvider bootstrap4 keyField='id' data={data} columns={columns} search>
-          {
-            props => (
-              <div>
-                <SearchBar
-                  className="search-bar"
-                  placeholder="Search food"
-                  {...props.searchProps}
-                />
-                <hr />
-                <BootstrapTable
-                  bootstrap4
-                  hover
-                  striped
-                  noDataIndication={() => noDataIndication}
-                  pagination={paginationFactory()}
-                  rowEvents={{onClick: this.onRowClick}}
-                  {...props.baseProps}
-                />
-              </div>
-            )
-          }
-        </ToolkitProvider>
-        <Modal show={showModal} onHide={this.handleModalClose}>
+        <div>
+          <Form.Control className="search-bar" type="plaintext" placeholder="Search food" onChange={this.handleQueryChange}/>
+          <BootstrapTable
+            bootstrap4
+            keyField='id'
+            data={data}
+            columns={columns}
+            hover
+            striped
+            noDataIndication={() => noDataIndication}
+            pagination={paginationFactory()}
+            rowEvents={{onClick: this.onRowClick}}
+          />
+        </div>
+        <Modal show={showModal} onHide={this.handleModalClose} onExited={this.handleModalExit}>
           <Modal.Header closeButton>
             <Modal.Title>Add Food</Modal.Title>
           </Modal.Header>

@@ -14,8 +14,7 @@ class Api::FoodsController < ApplicationController
   end
 
   def search
-    h = params.require(:params).permit(:query)
-    query = h[:query]
+    query = params.require(:query)
     search_code = <<-SQL
       SELECT * FROM foods
       WHERE name LIKE '%#{query}%'
