@@ -6,6 +6,29 @@ import { ProgressBar, Card, Alert, Button, Col, Form, Modal, Spinner } from 'rea
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 
+const quotes = [
+  "The last three or four reps is what makes the muscle grow. This area of pain divides a champion from someone who is not a champion.",
+  "Success usually comes to those who are too busy to be looking for it.",
+  "All progress takes place outside the comfort zone.",
+  "If you think lifting is dangerous, try being weak. Being weak is dangerous.",
+  "The only place where success comes before work is in the dictionary.",
+  "The clock is ticking. Are you becoming the person you want to be?",
+  "Whether you think you can, or you think you can't, you’re right.",
+  "The successful warrior is the average man, with laser-like focus.",
+  "You must expect great things of yourself before you can do them.",
+  "Action is the foundational key to all success.",
+  "Things may come to those who wait, but only the things left by those who hustle.",
+  "Well done is better than well said.",
+  "All our dreams can come true if we have the courage to pursue them.",
+  "A champion is someone who gets up when they can't.",
+  "What hurts today makes you stronger tomorrow.",
+  "If something stands between you and your success, move it. Never be denied.",
+  "If you want something you’ve never had, you must be willing to do something you’ve never done.",
+  "You have to think it before you can do it. The mind is what makes it all possible.",
+  "Things work out best for those who make the best of how things work out.",
+  "Success is walking from failure to failure with no loss of enthusiasm."
+]
+
 const NoDataIndication = () => (
   <div className="spinner">
     <Spinner animation="border" role="status">
@@ -156,7 +179,8 @@ class Dashboard extends Component {
           <hr className="my-4" />
 
           <h2>Meeting Your Goals 💪</h2>
-          <Card>
+          <span> Daily dose of motivation: <i> {quotes[Math.floor(Math.random() * quotes.length)]} </i> </span>
+          <Card style={{ 'marginTop': '10px' }}>
             <Card.Header>Progress</Card.Header>
             <Card.Body>
               <Card.Text>
