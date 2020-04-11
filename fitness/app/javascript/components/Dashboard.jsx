@@ -2,8 +2,17 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import BootstrapTable from 'react-bootstrap-table-next';
 import axios from 'axios';
-import { ProgressBar, Card } from 'react-bootstrap';
+import { ProgressBar, Card, Alert, Button, Col, Form, Modal, Spinner } from 'react-bootstrap';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import paginationFactory from 'react-bootstrap-table2-paginator';
+
+const NoDataIndication = () => (
+  <div className="spinner">
+    <Spinner animation="border" role="status">
+      <span className="sr-only">Loading...</span>
+    </Spinner>
+  </div>
+);
 
 const activity_factors = {
     0: 1.2,
@@ -32,22 +41,28 @@ class Dashboard extends Component {
         text: 'ID'
       }, {
         dataField: 'name',
-        text: 'Name'
+        text: 'Name',
+        sort: true
       }, {
         dataField: 'servings',
-        text: 'Amount (in g)'
+        text: 'Amount (in g)',
+        sort: true
       }, {
         dataField: 'calories',
-        text: 'Calories'
+        text: 'Calories',
+        sort: true
       }, {
         dataField: 'protein',
-        text: 'Protein (in g)'
+        text: 'Protein (in g)',
+        sort: true
       }, {
         dataField: 'fat',
-        text: 'Fat (in g)'
+        text: 'Fat (in g)',
+        sort: true
       }, {
         dataField: 'carbs',
-        text: 'Carbs (in g)'
+        text: 'Carbs (in g)',
+        sort: true
       }],
       history: [],
       isLoading: true,
@@ -70,6 +85,7 @@ class Dashboard extends Component {
     axios.get('/api/daily_analytics')
       .then(({ data }) => {
         this.setState({
+          isLoading: false,
           history: data.daily_history,
           caloric_progress: parseInt(100 * data.progress[0].caloric_progress),
           tdee: Math.round(data.tdee),
@@ -93,7 +109,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { checkedLogin, isLoggedIn, user } = this.props;
+    const { isLoading, checkedLogin, isLoggedIn, user } = this.props;
     if (!checkedLogin) {
       return null;
     }
@@ -116,6 +132,8 @@ class Dashboard extends Component {
       pb_f = <ProgressBar variant="success" now={this.state.fats_progress} label={`${this.state.fats}g of fat`} />
     }
 
+    const noDataIndication = isLoading ? <NoDataIndication /> : null;
+
     return (
       <div className="jumbotron jumbotron-fluid bg-transparent">
         <div className="container secondary-color">
@@ -125,11 +143,15 @@ class Dashboard extends Component {
           </p>
           <hr className="my-4" />
           <h2>Today's Meals 🍞 🍇</h2>
+          {this.state.history.length > 0 && (
           <BootstrapTable 
             bootstrap4
             hover
             striped
+            noDataIndication={() => noDataIndication}
+            pagination={paginationFactory()}
             keyField="food_id" data={ this.state.history } columns={ this.state.columns } /> 
+          )}
           <Link to="/pick_food" className="btn btn-lg custom-button mr-2" role="button">Add Food</Link>
           <hr className="my-4" />
 

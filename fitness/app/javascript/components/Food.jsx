@@ -44,29 +44,35 @@ class Food extends Component {
       {
         dataField: 'name',
         text: 'Name',
+        sort: true, 
         headerStyle: () => {
           return { width: '480px' };
         }
       },
       {
         dataField: 'calories',
-        text: 'Calories'
+        text: 'Calories',
+        sort: true
       },
       {
         dataField: 'carbs',
-        text: 'Carbs'
+        text: 'Carbs',
+        sort: true
       },
       {
         dataField: 'protein',
-        text: 'Protein'
+        text: 'Protein',
+        sort: true
       },
       {
         dataField: 'fat',
-        text: 'Fat'
+        text: 'Fat',
+        sort: true
       },
       {
         dataField: 'fibre',
-        text: 'Fibre'
+        text: 'Fibre',
+        sort: true
       }],
       data: [],
       originalData: []
@@ -194,6 +200,9 @@ class Food extends Component {
         {alert}
         <div>
           <Form.Control className="search-bar" type="plaintext" placeholder="What did you eat today?" onChange={this.handleQueryChange}/>
+          
+          <hr className="my-4" />
+
           <BootstrapTable
             bootstrap4
             keyField='id'
