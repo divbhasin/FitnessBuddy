@@ -31,16 +31,6 @@ class Login extends React.Component {
     const { name, value } = event.target;
     this.setState({ [name]: value });
     let errors = this.state.errors;
-    
-    switch (name) {
-      case 'email':
-        if (!validEmailRegex.test(value)) {
-          errors.email = 'Email is not valid!';
-        } else {
-          delete errors.email;
-        }
-        break;
-    }
   }
 
   handleSubmit(event) {

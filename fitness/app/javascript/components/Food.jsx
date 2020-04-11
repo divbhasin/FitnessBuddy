@@ -193,7 +193,7 @@ class Food extends Component {
       <div className="container secondary-color" style={{ marginTop: 50 }}>
         {alert}
         <div>
-          <Form.Control className="search-bar" type="plaintext" placeholder="Search food" onChange={this.handleQueryChange}/>
+          <Form.Control className="search-bar" type="plaintext" placeholder="What did you eat today?" onChange={this.handleQueryChange}/>
           <BootstrapTable
             bootstrap4
             keyField='id'
