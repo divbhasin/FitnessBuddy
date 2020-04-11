@@ -35,91 +35,55 @@ class Dashboard extends Component {
         text: 'Name'
       }, {
         dataField: 'servings',
-        text: 'Servings (size of 100g)'
+        text: 'Amount (in g)'
+      }, {
+        dataField: 'calories',
+        text: 'Calories'
+      }, {
+        dataField: 'protein',
+        text: 'Protein (in g)'
+      }, {
+        dataField: 'fat',
+        text: 'Fat (in g)'
+      }, {
+        dataField: 'carbs',
+        text: 'Carbs (in g)'
       }],
       history: [],
       isLoading: true,
-      tdee: this.calcTDEE(props.user),  
+      caloric_progress: 0,
+      tdee: 0,
       calories: 0,
-      fat: 0,
-      protein: 0,
-      carbs: 0
-    }
-  }
-
-
-  calcTDEE = (user) => {
-    console.log(user)
-    var bmr = 0
-    if (user.gender == 'male') {
-      bmr = 66 + (13.7 * user.weight) + (5 * user.height) - (6.8 * user.age)
-    }
-    else {
-      bmr = 655 + (9.6 * user.weight) + (1.8 * user.height) - (4.7 * user.age)
-    }
-
-    const tdee = activity_factors[user.activity_level_id] * bmr
-    var goal_calories = (1 + multiplier[user.goal_id]) * tdee
-    goal_calories = Number((goal_calories).toFixed(1))
-
-    return goal_calories 
-  }
-  
-  formatDate() {
-        var d = new Date(),
-              month = '' + (d.getMonth() + 1),
-              day = '' + d.getDate(),
-              year = d.getFullYear();
-
-        if (month.length < 2) 
-              month = '0' + month;
-        if (day.length < 2) 
-              day = '0' + day;
-
-        return [year, month, day].join('-');
-  }
-
-  filterToday(history) {
-    const today = this.formatDate()
-    var new_history = []
-    for (var h of history) {
-      if (h.created_at === today)
-        new_history.push(h)
-    }
-    return new_history
-  }
-
-  calcMacros(history) {
-    var macros = {
-      fats: 0,
       carbs: 0,
+      fats: 0,
       protein: 0,
-      calories: 0
+      protein_progress: 0,
+      fats_progress: 0,
+      carbs_progress: 0,
+      protein_goal: 0,
+      fats_goal: 0,
+      carbs_goal: 0
     }
-
-    for (var h of history) {
-      console.log(h)
-      macros.fats += parseFloat(h.fat)
-      macros.calories += parseFloat(h.calories)
-      macros.carbs += parseFloat(h.carbs)
-      macros.protein += parseFloat(h.protein)
-    }
-
-    return macros
   }
 
   getHistory = () => {
-    axios.get('/api/food_histories')
+    axios.get('/api/daily_analytics')
       .then(({ data }) => {
-        var td_history = this.filterToday(data.food_history)
-        var macros = this.calcMacros(td_history)
-
+        console.log(data)
         this.setState({
-          history: td_history,
-          carbs: macros.carbs,
-          fats: macros.fats,
-          calories: macros.calories,
-          protein: macros.protein,
+          history: data.daily_history,
+          caloric_progress: parseInt(100 * data.progress[0].caloric_progress),
+          tdee: Math.round(data.tdee),
+          calories: parseInt(data.progress[0].calories),
+          protein: parseInt(data.progress[0].protein),
+          fats: parseInt(data.progress[0].fats),
+          carbs: parseInt(data.progress[0].carbs),
+          protein_progress: parseInt(100 * data.progress[0].protein_progress),
+          carbs_progress: parseInt(100 * data.progress[0].carbs_progress),
+          fats_progress: parseInt(100 * data.progress[0].fats_progress),
+          protein_goal: Math.round(data.protein_goal),
+          fats_goal: Math.round(data.fats_goal),
+          carbs_goal: Math.round(data.carbs_goal)
         });
       })
       .catch(error => console.log('api errors:', error))
@@ -133,6 +97,24 @@ class Dashboard extends Component {
     const { checkedLogin, isLoggedIn, user } = this.props;
     if (!checkedLogin) {
       return null;
+    }
+
+    var pb_c = <ProgressBar now={this.state.caloric_progress} label={`${this.state.calories} calories`} />
+    var pb_p = <ProgressBar now={this.state.protein_progress} label={`${this.state.protein} g of protein`} />
+    var pb_ca = <ProgressBar now={this.state.carbs_progress} label={`${this.state.carbs} g of carbs`} />
+    var pb_f = <ProgressBar now={this.state.fats_progress} label={`${this.state.fats} g of fats`} />
+
+    if (this.state.caloric_progress >= 100) {
+      pb_c = <ProgressBar variant="success" now={this.state.caloric_progress} label={`${this.state.calories} calories`} />
+    }
+    if (this.state.protein_progress >= 100) {
+      pb_p = <ProgressBar variant="success" now={this.state.protein_progress} label={`${this.state.protein}g of protein`} />
+    }
+    if (this.state.carbs_progress >= 100) {
+      pb_ca = <ProgressBar variant="success" now={this.state.carbs_progress} label={`${this.state.carbs}g of carbs`} />
+    }
+    if (this.state.fats_progress >= 100) {
+      pb_f = <ProgressBar variant="success" now={this.state.fats_progress} label={`${this.state.fats}g of fat`} />
     }
 
     return (
@@ -155,10 +137,24 @@ class Dashboard extends Component {
             <Card.Header>Progress</Card.Header>
             <Card.Body>
               <Card.Text>
-                Caloric goal: {this.state.tdee} 
+                Caloric goal: {this.state.tdee} calories 
               </Card.Text>
-
-            <ProgressBar now={100 * this.state.calories / this.state.tdee} />
+              {pb_c}
+              <hr className="my-4" />
+              <Card.Text>
+                Protein goal: {this.state.protein_goal} g of protein 
+              </Card.Text>
+              {pb_p}
+              <hr className="my-4" />
+              <Card.Text>
+                Carbs goal: {this.state.carbs_goal} g of carbs 
+              </Card.Text>
+              {pb_ca}
+              <hr className="my-4" />
+              <Card.Text>
+                Fat goal: {this.state.fats_goal} g of fat 
+              </Card.Text>
+              {pb_f}
 
             </Card.Body>
           </Card>

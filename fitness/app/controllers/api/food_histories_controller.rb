@@ -8,20 +8,6 @@ class Api::FoodHistoriesController < ApplicationController
     else
       food_history = current_user.food_history.order(created_at: :desc)
       if food_history
-        @ret_history = []
-        food_history.each do |h|
-          @h = { name: h.food.name, 
-                 food_id: h.food_id, 
-                 servings: h.servings, 
-                 created_at: h.created_at, 
-                 calories: h.food.calories,
-                 carbs: h.food.carbs,
-                 protein: h.food.protein,
-                 fat: h.food.fat }
-
-          @ret_history << @h
-        end
-
         render json: {
           food_history: @ret_history 
         }
