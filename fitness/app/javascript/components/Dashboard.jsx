@@ -137,22 +137,22 @@ class Dashboard extends Component {
       return null;
     }
 
-    var pb_c = <ProgressBar now={this.state.caloric_progress} label={`${this.state.calories} calories`} />
-    var pb_p = <ProgressBar now={this.state.protein_progress} label={`${this.state.protein} g of protein`} />
-    var pb_ca = <ProgressBar now={this.state.carbs_progress} label={`${this.state.carbs} g of carbs`} />
-    var pb_f = <ProgressBar now={this.state.fats_progress} label={`${this.state.fats} g of fats`} />
+    var pb_c = <ProgressBar style={{ minWidth: 30 }} now={this.state.caloric_progress} label={`${this.state.calories} cal`} />
+    var pb_p = <ProgressBar style={{ minWidth: 30 }} now={this.state.protein_progress} label={`${this.state.protein} g`} />
+    var pb_ca = <ProgressBar style={{ minWidth: 30 }} now={this.state.carbs_progress} label={`${this.state.carbs} g`} />
+    var pb_f = <ProgressBar style={{ minWidth: 30 }} now={this.state.fats_progress} label={`${this.state.fats} g`} />
 
     if (this.state.caloric_progress >= 100) {
-      pb_c = <ProgressBar variant="success" now={this.state.caloric_progress} label={`${this.state.calories} calories`} />
+      pb_c = <ProgressBar style={{ minWidth: 30 }} variant="success" now={this.state.caloric_progress} label={`${this.state.calories} cal`} />
     }
     if (this.state.protein_progress >= 100) {
-      pb_p = <ProgressBar variant="success" now={this.state.protein_progress} label={`${this.state.protein}g of protein`} />
+      pb_p = <ProgressBar style={{ minWidth: 30 }} variant="success" now={this.state.protein_progress} label={`${this.state.protein}g`} />
     }
     if (this.state.carbs_progress >= 100) {
-      pb_ca = <ProgressBar variant="success" now={this.state.carbs_progress} label={`${this.state.carbs}g of carbs`} />
+      pb_ca = <ProgressBar style={{ minWidth: 30 }} variant="success" now={this.state.carbs_progress} label={`${this.state.carbs}g`} />
     }
     if (this.state.fats_progress >= 100) {
-      pb_f = <ProgressBar variant="success" now={this.state.fats_progress} label={`${this.state.fats}g of fat`} />
+      pb_f = <ProgressBar style={{ minWidth: 30 }} variant="success" now={this.state.fats_progress} label={`${this.state.fats}g`} />
     }
 
     const noDataIndication = isLoading ? <NoDataIndication /> : null;
@@ -184,25 +184,24 @@ class Dashboard extends Component {
             <Card.Header>Progress</Card.Header>
             <Card.Body>
               <Card.Text>
-                Caloric goal: {this.state.tdee} calories 
+                Caloric goal: {this.state.tdee} cal
               </Card.Text>
-              {pb_c}
+              <ProgressBar>{pb_c}</ProgressBar>
               <hr className="my-4" />
               <Card.Text>
-                Protein goal: {this.state.protein_goal} g of protein 
+                Protein goal: {this.state.protein_goal} g
               </Card.Text>
-              {pb_p}
+              <ProgressBar>{pb_p}</ProgressBar>
               <hr className="my-4" />
               <Card.Text>
-                Carbs goal: {this.state.carbs_goal} g of carbs 
+                Carbs goal: {this.state.carbs_goal} g
               </Card.Text>
-              {pb_ca}
+              <ProgressBar>{pb_ca}</ProgressBar>
               <hr className="my-4" />
               <Card.Text>
-                Fat goal: {this.state.fats_goal} g of fat 
+                Fat goal: {this.state.fats_goal} g
               </Card.Text>
-              {pb_f}
-
+              <ProgressBar>{pb_f}</ProgressBar>
             </Card.Body>
           </Card>
         </div>
