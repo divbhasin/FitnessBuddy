@@ -17,7 +17,7 @@ class Api::FoodsController < ApplicationController
     query = params.require(:query)
     search_code = <<-SQL
       SELECT * FROM foods
-      WHERE name LIKE '%#{query}%'
+      WHERE name ILIKE '%#{query}%'
     SQL
     
     search_results = ActiveRecord::Base.connection.execute(search_code)
