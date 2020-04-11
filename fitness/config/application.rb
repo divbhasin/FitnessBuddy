@@ -34,5 +34,7 @@ module Fitness
     
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore
+
+    config.time_zone = 'Eastern Time (US & Canada)'
   end
 end

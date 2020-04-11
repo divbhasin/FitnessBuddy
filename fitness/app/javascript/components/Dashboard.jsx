@@ -69,7 +69,6 @@ class Dashboard extends Component {
   getHistory = () => {
     axios.get('/api/daily_analytics')
       .then(({ data }) => {
-        console.log(data)
         this.setState({
           history: data.daily_history,
           caloric_progress: parseInt(100 * data.progress[0].caloric_progress),
@@ -120,19 +119,21 @@ class Dashboard extends Component {
     return (
       <div className="jumbotron jumbotron-fluid bg-transparent">
         <div className="container secondary-color">
-          <h1 className="display-4">Welcome</h1>
+          <h1 className="display-4">Welcome back, {user.first_name}!</h1>
           <p className="lead">
-          {user.first_name}, get started by adding your meals for the day!
+            Get started by <a href='/pick_food'> adding your meals </a> for the day!
           </p>
-          <Link to="/pick_food" className="btn btn-lg custom-button mr-2" role="button">Add Food</Link>
           <hr className="my-4" />
-          <h3 className="display-5">Today</h3>
+          <h2>Today's Meals 🍞 🍇</h2>
           <BootstrapTable 
             bootstrap4
             hover
             striped
             keyField="food_id" data={ this.state.history } columns={ this.state.columns } /> 
+          <Link to="/pick_food" className="btn btn-lg custom-button mr-2" role="button">Add Food</Link>
+          <hr className="my-4" />
 
+          <h2>Meeting Your Goals 💪</h2>
           <Card>
             <Card.Header>Progress</Card.Header>
             <Card.Body>
