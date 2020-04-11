@@ -1,3 +1,5 @@
+require 'date'
+
 class Api::UsersController < ApplicationController
   def index
     @users = User.all
@@ -56,25 +58,30 @@ class Api::UsersController < ApplicationController
     carbs_goal = 0.55 * calories_goal
     fats_goal = 0.25 * calories_goal
 
-    time = Time.new
+    today = Date.today.strftime("%Y-%m-%d")
     progress_code = <<-SQL
-      SELECT SUM(foods.calories * (food_histories.servings/100)) as calories, SUM(foods.calories * (food_histories.servings/100)) / #{calories_goal} as caloric_progress,
-      SUM(foods.protein * (food_histories.servings/100)) as protein, SUM(foods.protein * (food_histories.servings/100)) / #{protein_goal} as protein_progress,
-      SUM(foods.carbs * (food_histories.servings/100)) as carbs, SUM(foods.carbs * (food_histories.servings/100)) / #{carbs_goal} as carbs_progress,
-      SUM(foods.fat * (food_histories.servings/100)) as fats, SUM(foods.fat * (food_histories.servings/100)) / #{fats_goal} as fats_progress
+      SELECT SUM(foods.calories * (food_histories.servings/100)) as calories, 
+        SUM(foods.calories * (food_histories.servings/100)) / #{calories_goal} as caloric_progress,
+        SUM(foods.protein * (food_histories.servings/100)) as protein, SUM(foods.protein * (food_histories.servings/100)) / #{protein_goal} as protein_progress,
+        SUM(foods.carbs * (food_histories.servings/100)) as carbs, SUM(foods.carbs * (food_histories.servings/100)) / #{carbs_goal} as carbs_progress,
+        SUM(foods.fat * (food_histories.servings/100)) as fats, SUM(foods.fat * (food_histories.servings/100)) / #{fats_goal} as fats_progress
       FROM users, foods, food_histories
-      WHERE food_histories.created_at = '#{time.strftime("%Y-%m-%d")}'
-      AND food_histories.user_id = users.id AND foods.id = food_histories.food_id
-      AND users.id = #{current_user.id}
+      WHERE food_histories.created_at = to_date('#{today}', 'YYYY-MM-DD')
+        AND food_histories.user_id = users.id AND foods.id = food_histories.food_id
+        AND users.id = #{current_user.id}
     SQL
 
     daily_history_code = <<-SQL
-      SELECT foods.name as name, ROUND(foods.calories * (food_histories.servings/100)) as calories, ROUND(foods.carbs * (food_histories.servings/100)) as carbs, ROUND(foods.protein * (food_histories.servings/100)) as protein, ROUND(foods.fat * (food_histories.servings/100)) as fat, ROUND(foods.fibre * (food_histories.servings/100)) as fibre,
-      food_histories.servings as servings
+      SELECT foods.name as name, ROUND(foods.calories * (food_histories.servings/100)) as calories, 
+        ROUND(foods.carbs * (food_histories.servings/100)) as carbs, 
+        ROUND(foods.protein * (food_histories.servings/100)) as protein, 
+        ROUND(foods.fat * (food_histories.servings/100)) as fat, 
+        ROUND(foods.fibre * (food_histories.servings/100)) as fibre,
+        food_histories.servings as servings
       FROM users, foods, food_histories
-      WHERE food_histories.created_at = '#{time.strftime("%Y-%m-%d")}'
-      AND food_histories.user_id = users.id AND foods.id = food_histories.food_id
-      AND users.id = #{current_user.id}
+      WHERE food_histories.created_at = to_date('#{today}', 'YYYY-MM-DD')
+        AND food_histories.user_id = users.id AND foods.id = food_histories.food_id
+        AND users.id = #{current_user.id}
     SQL
 
     progress = ActiveRecord::Base.connection.execute(progress_code)
@@ -151,14 +158,16 @@ class Api::UsersController < ApplicationController
   end
 
   def daily_calculator_query(macro)
+    one_month_ago = (Date.today - 30).strftime("%Y-%m-%d")
+    today = Date.today.strftime("%Y-%m-%d")
     code = <<-SQL
       SELECT t.count, to_char(t.date, 'yyyy-mm-dd') as date FROM (
         SELECT sum(foods.#{macro} * (food_histories.servings / 100)) as count, date_trunc('day', food_histories.created_at) as date
         FROM users, foods, food_histories
         WHERE users.id = #{current_user.id} AND food_histories.user_id = users.id AND food_histories.food_id = foods.id 
         GROUP BY date_trunc('day', food_histories.created_at)
-        HAVING date_trunc('day', food_histories.created_at) > now() - interval '1 month'
-        AND date_trunc('day', food_histories.created_at) <= now()
+        HAVING date_trunc('day', food_histories.created_at) > to_date('#{one_month_ago}', 'YYYY-MM-DD') 
+          AND date_trunc('day', food_histories.created_at) <= to_date('#{today}', 'YYYY-MM-DD') 
       ) AS t;
     SQL
   end
