@@ -62,9 +62,9 @@ class Api::UsersController < ApplicationController
     progress_code = <<-SQL
       SELECT SUM(foods.calories * (food_histories.servings/100)) as calories, 
         SUM(foods.calories * (food_histories.servings/100)) / #{calories_goal} as caloric_progress,
-        SUM(foods.protein * (food_histories.servings/100)) as protein, SUM(foods.protein * (food_histories.servings/100)) / #{protein_goal} as protein_progress,
-        SUM(foods.carbs * (food_histories.servings/100)) as carbs, SUM(foods.carbs * (food_histories.servings/100)) / #{carbs_goal} as carbs_progress,
-        SUM(foods.fat * (food_histories.servings/100)) as fats, SUM(foods.fat * (food_histories.servings/100)) / #{fats_goal} as fats_progress
+        SUM(ROUND(foods.protein * (food_histories.servings/100))) as protein, SUM(foods.protein * (food_histories.servings/100)) / #{protein_goal} as protein_progress,
+        SUM(ROUND(foods.carbs * (food_histories.servings/100))) as carbs, SUM(foods.carbs * (food_histories.servings/100)) / #{carbs_goal} as carbs_progress,
+        SUM(ROUND(foods.fat * (food_histories.servings/100))) as fats, SUM(foods.fat * (food_histories.servings/100)) / #{fats_goal} as fats_progress
       FROM users, foods, food_histories
       WHERE food_histories.created_at = to_date('#{today}', 'YYYY-MM-DD')
         AND food_histories.user_id = users.id AND foods.id = food_histories.food_id
