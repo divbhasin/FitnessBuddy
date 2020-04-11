@@ -39,8 +39,8 @@ class Api::UsersController < ApplicationController
     }
 
     multiplier = {
-      5 => -0.2,
-      4 => -0.1,
+      4 => -0.2,
+      5 => -0.1,
       1 => 0,
       2 => 0.1,
       3 => 0.2
@@ -54,9 +54,9 @@ class Api::UsersController < ApplicationController
     tdee = activity_factors[current_user.activity_level.id] * bmr
     calories_goal = (1 + multiplier[current_user.goal.id]) * tdee
 
-    protein_goal = 0.20 * calories_goal
-    carbs_goal = 0.55 * calories_goal
-    fats_goal = 0.25 * calories_goal
+    protein_goal = (0.3 * calories_goal) / 4
+    carbs_goal = (0.35 * calories_goal) / 4
+    fats_goal = (0.35 * calories_goal) / 9 
 
     today = Date.today.strftime("%Y-%m-%d")
     progress_code = <<-SQL
@@ -93,7 +93,7 @@ class Api::UsersController < ApplicationController
     render json: {
       daily_history: daily_history,
       progress: progress,
-      tdee: tdee,
+      tdee: calories_goal,
       protein_goal: protein_goal,
       fats_goal: fats_goal,
       carbs_goal: carbs_goal
