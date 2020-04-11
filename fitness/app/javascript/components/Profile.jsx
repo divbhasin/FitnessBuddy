@@ -17,8 +17,8 @@ const goal_mappings = {
     1: 'Maintain my weight',
     2: 'Gain 0.5 lb per week',
     3: 'Gain 1 lb per week',
-    4: 'Lose 0.5 lb per week',
-    5: 'Lose 1 lb per week'
+    5: 'Lose 0.5 lb per week',
+    4: 'Lose 1 lb per week'
 }
 
 
@@ -51,6 +51,8 @@ class Profile extends React.Component {
         activity_level: this.state.activity_level,
         fitness_goal: this.state.fitness_goal
       }
+
+      console.log(user)
       
       axios.put('/api/users/0', { user })
       .then(({ data }) => {
