@@ -72,16 +72,19 @@ class Api::UsersController < ApplicationController
     SQL
 
     daily_history_code = <<-SQL
-      SELECT foods.name as name, ROUND(foods.calories * (food_histories.servings/100)) as calories, 
-        ROUND(foods.carbs * (food_histories.servings/100)) as carbs, 
-        ROUND(foods.protein * (food_histories.servings/100)) as protein, 
-        ROUND(foods.fat * (food_histories.servings/100)) as fat, 
-        ROUND(foods.fibre * (food_histories.servings/100)) as fibre,
-        food_histories.servings as servings
+      SELECT foods.name as name, 
+        SUM(ROUND(foods.calories * (food_histories.servings/100))) as calories, 
+        SUM(ROUND(foods.carbs * (food_histories.servings/100))) as carbs, 
+        SUM(ROUND(foods.protein * (food_histories.servings/100))) as protein, 
+        SUM(ROUND(foods.fat * (food_histories.servings/100))) as fat, 
+        SUM(ROUND(foods.fibre * (food_histories.servings/100))) as fibre,
+        SUM(food_histories.servings) as servings
       FROM users, foods, food_histories
       WHERE food_histories.created_at = to_date('#{today}', 'YYYY-MM-DD')
         AND food_histories.user_id = users.id AND foods.id = food_histories.food_id
         AND users.id = #{current_user.id}
+      GROUP BY foods.name
+      ORDER BY foods.name ASC
     SQL
 
     progress = ActiveRecord::Base.connection.execute(progress_code)
