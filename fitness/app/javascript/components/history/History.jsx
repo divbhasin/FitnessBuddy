@@ -139,7 +139,7 @@ class History extends Component {
 
   async componentDidMount() {
     var self = this;
-    axios.get('/api/analytics', { withCredentials: true })
+    axios.get('/api/monthly_analytics', { withCredentials: true })
       .then(( { data }) => {
         this.setState({
           calories_results: data.calories_results,
