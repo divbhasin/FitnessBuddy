@@ -137,22 +137,22 @@ class Dashboard extends Component {
       return null;
     }
 
-    var pb_c = <ProgressBar style={{ minWidth: 30 }} now={this.state.caloric_progress} />
-    var pb_p = <ProgressBar style={{ minWidth: 30 }} now={this.state.protein_progress} />
-    var pb_ca = <ProgressBar style={{ minWidth: 30 }} now={this.state.carbs_progress} />
-    var pb_f = <ProgressBar style={{ minWidth: 30 }} now={this.state.fats_progress} />
+    var pb_c = <ProgressBar now={this.state.caloric_progress} />
+    var pb_p = <ProgressBar now={this.state.protein_progress} />
+    var pb_ca = <ProgressBar now={this.state.carbs_progress} />
+    var pb_f = <ProgressBar now={this.state.fats_progress} />
 
     if (this.state.caloric_progress >= 100) {
-      pb_c = <ProgressBar style={{ minWidth: 30 }} variant="success" now={this.state.caloric_progress} />
+      pb_c = <ProgressBar variant="success" now={this.state.caloric_progress} />
     }
     if (this.state.protein_progress >= 100) {
-      pb_p = <ProgressBar style={{ minWidth: 30 }} variant="success" now={this.state.protein_progress} />
+      pb_p = <ProgressBar variant="success" now={this.state.protein_progress} />
     }
     if (this.state.carbs_progress >= 100) {
-      pb_ca = <ProgressBar style={{ minWidth: 30 }} variant="success" now={this.state.carbs_progress} />
+      pb_ca = <ProgressBar variant="success" now={this.state.carbs_progress} />
     }
     if (this.state.fats_progress >= 100) {
-      pb_f = <ProgressBar style={{ minWidth: 30 }} variant="success" now={this.state.fats_progress} />
+      pb_f = <ProgressBar variant="success" now={this.state.fats_progress} />
     }
 
     const noDataIndication = isLoading ? <NoDataIndication /> : null;
@@ -184,22 +184,22 @@ class Dashboard extends Component {
             <Card.Header>Progress</Card.Header>
             <Card.Body>
               <Card.Text>
-                Calories: {this.state.calories} / {this.state.tdee} cal
+                Calories: {this.state.calories || 0} / {this.state.tdee} cal
               </Card.Text>
               <ProgressBar>{pb_c}</ProgressBar>
               <hr className="my-4" />
               <Card.Text>
-                Protein: {this.state.protein} / {this.state.protein_goal} g
+                Protein: {this.state.protein || 0} / {this.state.protein_goal} g
               </Card.Text>
               <ProgressBar>{pb_p}</ProgressBar>
               <hr className="my-4" />
               <Card.Text>
-                Carbs: {this.state.carbs} / {this.state.carbs_goal} g
+                Carbs: {this.state.carbs || 0} / {this.state.carbs_goal} g
               </Card.Text>
               <ProgressBar>{pb_ca}</ProgressBar>
               <hr className="my-4" />
               <Card.Text>
-                Fat: {this.state.fats} / {this.state.fats_goal} g
+                Fat: {this.state.fats || 0} / {this.state.fats_goal} g
               </Card.Text>
               <ProgressBar>{pb_f}</ProgressBar>
             </Card.Body>
