@@ -34,7 +34,7 @@ class MyNavBar extends React.Component {
 
     return (
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="/">MyFitnessApp</Navbar.Brand>
+        <Navbar.Brand href="/">FitnessBuddy</Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">

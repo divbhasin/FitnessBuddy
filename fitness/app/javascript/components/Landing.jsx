@@ -11,7 +11,7 @@ class Landing extends Component {
     return (
       <div className="jumbotron jumbotron-fluid bg-transparent">
         <div className="container secondary-color">
-          <h1 className="display-4">MyFitnessApp 💪</h1>
+          <h1 className="display-4">FitnessBuddy 💪</h1>
           <p className="lead">
             Free online calorie counter and diet plan tracker.
           </p>
