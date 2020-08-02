@@ -1,4 +1,4 @@
-# Fitness App
+# FitnessBuddy
 ## Getting started
 ### Requirements
 * Ruby
