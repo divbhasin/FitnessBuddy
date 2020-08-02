@@ -1,0 +1,1 @@
+{"ast":null,"code":"import Skeleton from './Skeleton';\nimport SkeletonButton from './Button';\nimport SkeletonAvatar from './Avatar';\nimport SkeletonInput from './Input';\nSkeleton.Button = SkeletonButton;\nSkeleton.Avatar = SkeletonAvatar;\nSkeleton.Input = SkeletonInput;\nexport default Skeleton;","map":null,"metadata":{},"sourceType":"module"}
